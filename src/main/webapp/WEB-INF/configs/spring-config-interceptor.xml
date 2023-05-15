@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/context
+	   		http://www.springframework.org/schema/context/spring-context.xsd
+	   		http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- Cấu hình interceptor --> 
+<!-- 	<mvc:interceptors>   -->
+<!-- 		 <mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/home.htm"/> -->
+<!-- 			<mvc:mapping path="/updateSalary.htm"/> -->
+<!-- 			<mvc:mapping path = "/setFault.htm"/> -->
+<!-- 			<mvc:mapping path = "/Edit.htm"/> -->
+<!-- 			<mvc:mapping path = "/showDetail.htm"/> -->
+<!-- 			<mvc:mapping path = "/homeAnother.htm"/> -->
+<!-- 			<mvc:mapping path = "/checkin.htm"/> -->
+<!-- 			<mvc:mapping path = "/ChangePassword/**"/> -->
+<!-- 			<mvc:mapping path = "/ChangePassword.htm"/> -->
+<!-- 			<mvc:mapping path = "/DisplayStaffMistake/**"/> -->
+<!-- 			<mvc:mapping path = "/DisplayStaffMistake.htm"/> -->
+<!-- 			<mvc:mapping path = "/EnabledStaff/**"/> -->
+<!-- 			<mvc:mapping path = "/EnabledStaff.htm"/> -->
+<!-- 			<mvc:mapping path = "/JobAndFault/**"/> -->
+<!-- 			<mvc:mapping path = "/JobAndFault.htm"/> -->
+<!-- 			<mvc:mapping path = "/ManagerRegistration/**"/> -->
+<!-- 			<mvc:mapping path = "/ManagerRegistration.htm"/> -->
+<!-- 			<mvc:mapping path = "/MistakeHistory/**"/> -->
+<!-- 			<mvc:mapping path = "/MistakeHistory.htm"/> -->
+<!-- 			<mvc:mapping path = "/Recruit/**"/> -->
+<!-- 			<mvc:mapping path = "/Recruit.htm"/> -->
+<!-- 			<mvc:mapping path = "/salary.htm"/> -->
+<!-- 			<mvc:mapping path = "/historySalary.htm"/> -->
+<!-- 			<mvc:mapping path = "/paySalary.htm"/> -->
+<!-- 			<mvc:mapping path = "/SalaryHistory/**"/> -->
+<!-- 			<mvc:mapping path = "/SalaryHistory.htm"/> -->
+<!-- 			<mvc:mapping path = "/SelfInfor/**"/> -->
+<!-- 			<mvc:mapping path = "/SelfInfor.htm"/> -->
+<!-- 			<mvc:mapping path = "/StaffRegisterShift/**"/> -->
+<!-- 			<mvc:mapping path = "/StaffRegisterShift.htm"/> -->
+<!-- 			<mvc:mapping path = "/StaffTimetable/**"/> -->
+<!-- 			<mvc:mapping path = "/StaffTimetable.htm"/> -->
+<!-- 			<mvc:mapping path = "/rank.htm"/> -->
+<!-- 			<mvc:mapping path = "/showInMonth.htm"/> -->
+<!-- 			<bean class="ptithcm.interceptor.LoggerInterceptor" /> -->
+<!-- 		</mvc:interceptor> -->
+<!-- 	</mvc:interceptors> -->
+
+</beans>
