@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Trang chủ</title>
 </head>
 <body>
-
+  <script>window.location="http://localhost:8080/SpotifyWeb/home/login.htm";</script>
 </body>
 </html>

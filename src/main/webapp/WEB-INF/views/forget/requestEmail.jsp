@@ -8,7 +8,7 @@
 <base href ="${pageContext.servletContext.contextPath }/">
 </head>
 <body>
-<form action="/Spotify/forget/requestEmail.htm" method="POST" >
+<form action="/SpotifyWeb/forget/requestEmail.htm" method="POST" >
 							<c:if test="${btnStatus=='sendEmail'}">
 							<div>
 								<label>Email</label>
@@ -27,7 +27,7 @@
 							</c:if>
 							<div >
 								<div style="margin-left: 2.5em">
-								<button onclick="location.href='http://localhost:8080/Spotify/forget/requestEmail.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/forget/requestEmail.htm'"
 									type="button">Tải lại trang</button>
 								<c:if test="${btnStatus=='sendEmail'}">
 									<button name="${btnStatus}">Gửi email</button>

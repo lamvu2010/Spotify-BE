@@ -38,7 +38,7 @@
                     </div>
     
                     <div class="modal-body">
-					<form action="/Spotify/user/changePassword.htm" method="POST">
+					<form action="/SpotifyWeb/user/changePassword.htm" method="POST">
 							<label for="oldPass" class="form-label fw-bold">Your old password</label>
 							<input name="oldPassword" value="${oldPassword}" type="password" maxlength="20"
 							class="form-control mb-3" id="oldPass" required/>
@@ -56,7 +56,7 @@
 									<button class="submit btn-spotify">Xác nhận</button>
 									
 									
-								<button onclick="location.href='http://localhost:8080/Spotify/home/login.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/home/login.htm'"
 									type="button" class="submit btn-spotify">Về trang chủ</button>
 							</div>
 	</form>

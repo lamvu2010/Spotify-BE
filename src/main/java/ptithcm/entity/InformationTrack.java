@@ -17,6 +17,11 @@ public class InformationTrack {
 	public InformationTrack() {
 		
 	}
+	
+	public InformationTrack(Track track, User artist) {
+		this.track=track;
+		this.artist=artist;
+	}
 
 	public Long getId_information() {
 		return id_information;

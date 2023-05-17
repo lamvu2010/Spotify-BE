@@ -14,6 +14,30 @@
 			http://www.springframework.org/schema/mvc 
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+		    <mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/home/login.htm"/>
+			<mvc:exclude-mapping path="/forget/requestEmail.htm"/>
+			<mvc:exclude-mapping path="/user/register/**"/>
+			<bean class="ptithcm.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mvc:mapping path="/admin/**"/>
+		    <mvc:mapping path="/user/list.htm"/>
+		    <mvc:mapping path="/admin.htm"/>
+			<bean class="ptithcm.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mvc:mapping path="/artist/**"/>
+			<bean class="ptithcm.interceptor.ArtistInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mvc:mapping path="/audience/**"/>
+		    <mvc:mapping path="/audience.htm"/>
+			<bean class="ptithcm.interceptor.AudienceInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- Cấu hình interceptor --> 
 <!-- 	<mvc:interceptors>   -->
 <!-- 		 <mvc:interceptor> -->

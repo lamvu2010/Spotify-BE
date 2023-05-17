@@ -11,7 +11,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter  {
 			throws Exception {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("permission") == null){
-			response.sendRedirect("http://localhost:8080/Spotify/home/login.htm");
+			response.sendRedirect("http://localhost:8080/SpotifyWeb/home/login.htm");
 			return false;
 		}
 		return true;

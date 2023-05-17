@@ -1,8 +1,12 @@
 package ptithcm.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="Playlist")
@@ -12,8 +16,10 @@ public class Playlist {
 	@Column(name="Id_playlist")
 	private Long id_playlist;
 	@Column(name="Name")
+	@NotBlank(message="Please input name")
 	private String name;
 	@Column(name="CreatedDate")
+	@CreationTimestamp
 	private Date createdDate;
 	@Column(name="Image")
 	private String image;
@@ -25,7 +31,9 @@ public class Playlist {
 	@Column(name="Status")
 	private String status;
 	public Playlist() {
-		
+		isPublic=false;
+		status="pending";
+		setCreatedDate(Date.valueOf(LocalDate.now()));
 	}
 	
 	public Long getId_playlist() {

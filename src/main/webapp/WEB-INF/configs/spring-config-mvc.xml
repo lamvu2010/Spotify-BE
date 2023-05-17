@@ -18,5 +18,10 @@
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 	<!-- Cấu hình package chứa các controller -->
-	<context:component-scan base-package="ptithcm.controller,ptithcm.bean" />
+	<context:component-scan base-package="ptithcm.controller,ptithcm.bean, ptithcm.interceptor, ptithcm.entity" />
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- maxUploadSize=20MB  -->
+		<property name="maxUploadSize" value="20971520"/>
+	</bean>
 </beans>
