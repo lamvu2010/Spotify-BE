@@ -33,7 +33,7 @@ public class LoginController {
 		List<User> list = query.list();
 		return list;
 	}
-	@RequestMapping(value="login",method=RequestMethod.GET)
+	@RequestMapping(value="login", method=RequestMethod.GET)
 	public String showLogin() {
 		return"login";
 	}

@@ -9,7 +9,7 @@
 <base href ="${pageContext.servletContext.contextPath }/">
 </head>
 <body>
-<form:form modelAttribute="user" action="/Spotify/user/register/form.htm" method="POST">
+<form:form modelAttribute="user" action="/SpotifyWeb/user/register/form.htm" method="POST">
 						
 							<div>
 								<label>Username</label>
@@ -71,7 +71,7 @@
 									<button>Đăng ký</button>
 									<p5 class="text-danger">${message}</p5>
 								</div>
-								<button onclick="location.href='http://localhost:8080/Spotify/home/login.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/home/login.htm'"
 									type="button">Về trang đăng nhập</button>
 							</div>
 	</form:form>

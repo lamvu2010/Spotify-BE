@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<form:form modelAttribute="track" action="/Spotify/track/submit.htm" method="POST" enctype="multipart/form-data">
+<form:form modelAttribute="track" action="/SpotifyWeb/track/submit.htm" method="POST" enctype="multipart/form-data">
 							<form:hidden path="id_track"/>
 							<form:hidden path="uploadDate"/>
 							<form:hidden path="like"/>
@@ -108,7 +108,7 @@
 								</c:if>
 									<p5 class="text-danger">${message}</p5>
 								</div>
-								<button onclick="location.href='http://localhost:8080/Spotify/track/submit.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/track/submit.htm'"
 									type="button">Tải lại trang</button>
 							</div>
 							

@@ -8,7 +8,7 @@
 <base href ="${pageContext.servletContext.contextPath }/">
 </head>
 <body>
-<form action="/Spotify/forget/requestEmail.htm" method="POST" >
+<form action="/SpotifyWeb/forget/requestEmail.htm" method="POST" >
 							<div>
 								<label>Username: </label>
 								${username}
@@ -26,7 +26,7 @@
 									<button name="supply">Xác nhận </button>
 									<p>${message}</p>
 								</div>
-								<button onclick="location.href='http://localhost:8080/Spotify/home/login.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/home/login.htm'"
 									type="button">Về trang đăng nhập</button>
 							</div>
 	</form>

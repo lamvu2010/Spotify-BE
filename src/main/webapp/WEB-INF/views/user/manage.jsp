@@ -25,7 +25,7 @@
 </head>
 <body>
 <div>
-			<form:form modelAttribute="user" action="/Spotify/user/list.htm" method="POST">
+			<form:form modelAttribute="user" action="/SpotifyWeb/user/list.htm" method="POST">
 							<div>
 								<label>Username</label>
 								<form:input path="username" type="text" maxlength="20"/>
@@ -91,7 +91,7 @@
 							<div><button name="btnAdd">Thêm</button></div>
 							<div >
 							<p>${message}</p>
-							<button onclick="location.href='http://localhost:8080/Spotify/user/list.htm'"
+							<button onclick="location.href='http://localhost:8080/SpotifyWeb/user/list.htm'"
 									type="button">Tải lại trang</button>
 							</div>
 	</form:form>
@@ -128,10 +128,10 @@
 										<td>${user.email}</td>
 										<td>${user.lock}</td>
 										<td>${user.permission}</td>
-										<td><a href="/Spotify/user/list/${user.username}.htm?linkEdit"
+										<td><a href="/SpotifyWeb/user/list/${user.username}.htm?linkEdit"
 											>lock/ unlock</a>
 										</td>
-										<td><a href="/Spotify/user/list/${user.username}.htm?linkDelete"
+										<td><a href="/SpotifyWeb/user/list/${user.username}.htm?linkDelete"
 											>delete</a>
 										</td>
 									</tr>

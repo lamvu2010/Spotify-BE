@@ -9,7 +9,7 @@
 <base href ="${pageContext.servletContext.contextPath }/">
 </head>
 <body>
-<form:form modelAttribute="user" action="/Spotify/user/info.htm" method="POST">
+<form:form modelAttribute="user" action="/SpotifyWeb/user/info.htm" method="POST">
 							<div hidden="true">
 								<label>Username</label>
 								<form:input path="username" type="text" maxlength="20"/>
@@ -110,7 +110,7 @@
 								</c:if>
 									<p5 class="text-danger">${message}</p5>
 								</div>
-								<button onclick="location.href='http://localhost:8080/Spotify/user/info.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/user/info.htm'"
 									type="button">Tải lại trang</button>
 							</div>
 	</form:form>

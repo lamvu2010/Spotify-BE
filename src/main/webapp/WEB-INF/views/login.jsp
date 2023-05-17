@@ -25,7 +25,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 d-flex justify-content-center">
-                <form action="/Spotify/home/login.htm" method="POST">
+                <form action="/SpotifyWeb/home/login.htm" method="POST">
                     <div class="form-outline mb-4">
                         <label>Username</label>
                         <input name="username" type="text" maxlength="20" id="form2Example1" class="form-control" />
@@ -45,11 +45,11 @@
                       </div>
               
                       <div class="col">
-                        <a href="http://localhost:8080/Spotify/forget/requestEmail.htm">Forgot password?</a>
+                        <a href="http://localhost:8080/SpotifyWeb/forget/requestEmail.htm">Forgot password?</a>
                       </div>
                     </div>
               
-                    <button 
+                    <button type = "submit"
                         class="btn btn-primary btn-block mb-4 w-100 base-bnt" 
                         style="
                             background-color: #1ed760; 
@@ -70,7 +70,7 @@
                             color: #878787;
                             border: 1px solid #878787;
                         "
-                        onclick="location.href='http://localhost:8080/Spotify/user/register/form.htm'"
+                        onclick="location.href='http://localhost:8080/SpotifyWeb/user/register/form.htm'"
 									type="button"
                     >
                         Sign up
@@ -82,7 +82,7 @@
                             background-color: #fff; 
                             color: #878787;
                             border: 1px solid #878787;
-                        " onclick="location.href='http://localhost:8080/Spotify/home/login.htm'"
+                        " onclick="location.href='http://localhost:8080/SpotifyWeb/home/login.htm'"
 									type="button">Tải lại trang</button>
                     </div>
                 </form>
