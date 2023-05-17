@@ -9,10 +9,24 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1" />
 <title>Submit Track</title>
 <base href ="${pageContext.servletContext.contextPath }/">
+<style>
+	table{
+		border-collapse:collapse;
+		width:100%;
+	}
+	th,td{
+		line-height: 25px;
+		border:1px solid black;
+		padding:5px;
+	}
+	th{
+		background-color:green;
+	}
+</style>
 </head>
 <body>
 
-<form:form modelAttribute="track" action="/SpotifyWeb/track/submit.htm" method="POST" enctype="multipart/form-data">
+<form:form modelAttribute="track" action="/SpotifyWeb/artist/submitTrack.htm" method="POST" enctype="multipart/form-data">
 							<form:hidden path="id_track"/>
 							<form:hidden path="uploadDate"/>
 							<form:hidden path="like"/>
@@ -87,7 +101,7 @@
 								<c:if test="${btnStatus=='btnConfirm'}">
 								<c:if test="${track.image!=null}">
 								<img width="31" height="31"
-													src="<c:url value='/resources/img/track/${track.image}'/>" />
+													src="<c:url value='/resources/img/track/${track.image}'/> "/>
 													</c:if></c:if>
 							</div>
 							<div>
@@ -98,17 +112,68 @@
 									<form:errors path="isPublic" />
 								</p>
 							</div>
+							
+							
 							<div >
 								<div style="margin-left: 2.5em">
 								<c:if test="${btnStatus=='btnSubmit'}">
+									<div>
+										<select name="id_artist">
+											<c:forEach var="artist" items="${artists}">
+												<option value="${artist.username}">${artist.fullname}</option>
+											</c:forEach>
+										</select>
+										<button name="addArtist">addArtist</button>
+									</div>
+										<div >
+											<table >
+												<thead>
+													<tr>
+														<th>Username</th>
+														<th>Fullname</th>
+														<th>Delete</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="artist" items="${artistList}">
+														<tr>
+															<td>${artist.username}</td>
+															<td>${artist.fullname}</td>
+															
+															<td><a href="/SpotifyWeb/artist/submitTrack/${artist.username}.htm?linkDelete"
+																>Delete</a></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+								
 									<button name="btnSubmit" id="btnSubmit" type="submit">Submit</button>
 								</c:if>
 								<c:if test="${btnStatus=='btnConfirm'}">
+									<div >
+											<table >
+												<thead>
+													<tr>
+														<th>Username</th>
+														<th>Fullname</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="artist" items="${artistList}">
+														<tr>
+															<td>${artist.username}</td>
+															<td>${artist.fullname}</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
 									<button name="btnConfirm">Confirm</button>
 								</c:if>
 									<p5 class="text-danger">${message}</p5>
 								</div>
-								<button onclick="location.href='http://localhost:8080/SpotifyWeb/track/submit.htm'"
+								<button onclick="location.href='http://localhost:8080/SpotifyWeb/artist/submitTrack.htm'"
 									type="button">Tải lại trang</button>
 							</div>
 							
@@ -188,5 +253,6 @@ function loadSoundFile(url) {
 }
 </script>
 	</form:form>
+		
 </body>
 </html>
