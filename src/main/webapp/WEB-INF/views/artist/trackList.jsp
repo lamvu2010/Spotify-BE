@@ -51,6 +51,11 @@
 											<source src="data:audio/mp3;base64,${track.path}">
 											</audio>
 										</td>
+										<%-- <td>
+										<c:forEach var="information" items="${track.informationTracks}">
+										${information.artist.fullname}
+										</c:forEach>
+										</td> --%>
 										<td>${track.uploadDate}</td>
 										<td>${track.like}</td>
 										<td>${track.genre.type}</td>
