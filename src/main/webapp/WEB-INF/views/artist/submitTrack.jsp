@@ -43,23 +43,6 @@
 							</div>
 							<div>
 								<label>File Music</label>
-								
-								<!-- <script>
-								var fileInput=document.getElementById("fileInput");
-								fileInput.addEventListener("change",function(){
-									var file=fileInput.files[0];
-									var reader=new FileReader();
-									reader.addEventListener("load",function(){
-										var base64=reader.result;
-										var music = document.getElementById("music");
-										music.value=base64;
-										var audio=new Audio();
-										audio.src=base64;
-										audio.play();
-									});
-									reader.readAsDataURL(file);
-								});
-								</script> -->
 								<c:if test="${btnStatus=='btnSubmit'}">
 								<p style="color: red; font-style: oblique">
 									<form:errors path="path" />

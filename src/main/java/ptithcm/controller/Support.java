@@ -1,8 +1,14 @@
 package ptithcm.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 public class Support {
+	
+	
+	
+	
 	// Hàm mã hóa caesar có số lẫn kí tự đặc biệt bằng Java
     public static String encrypt(String plainText) {
         //Khoảng cách

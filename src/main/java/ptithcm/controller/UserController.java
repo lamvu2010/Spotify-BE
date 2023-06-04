@@ -1,5 +1,10 @@
 package ptithcm.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ptithcm.bean.Mailer;
+import ptithcm.bean.Time;
 import ptithcm.entity.User;
 
 @Controller
@@ -89,6 +96,13 @@ public class UserController {
 	   	return matcher.matches();
 	}
 	
+	@ModelAttribute("nations")
+	public List<String> getNationList(){
+		String []arrNations=new String[] {"Vietnam","England", "China","Japan"};
+		List<String> listNations=Arrays.asList(arrNations);
+		return listNations;
+	}
+	
 	public int insert(Object object) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -141,12 +155,13 @@ public class UserController {
 		newUser.setPassword("123");//set mật khẩu mặc định
 //		String codeRandom= Support.generateRandomString();
 //		newUser.setPassword(codeRandom);
+		model.addAttribute("month", "");
 		model.addAttribute("user",newUser);
 		model.addAttribute("userList", userList);
 		return "user/manage";
 	}
 	@RequestMapping(value="list",params="btnAdd",method=RequestMethod.POST)
-	public String addUser(ModelMap model,@Validated @ModelAttribute("user") User user, BindingResult errors) {
+	public String addUser(ModelMap model,HttpServletRequest request,@Validated @ModelAttribute("user") User user, BindingResult errors) throws ParseException {
 		
 		if(testUsernameExist(user.getUsername())) {
 			errors.rejectValue("username", "user", "Username đã được đăng ký");
@@ -163,9 +178,13 @@ public class UserController {
 		if(!testPhoneRegex(user.getPhonenumber())) {
 			errors.rejectValue("phonenumber", "user", "Không đúng định dạng 10 số");
 		}
-		if(user.getBirthday()==null) {
-			errors.rejectValue("birthday", "user", "Vui lòng nhập ngày sinh");
-		}
+		
+		String year=request.getParameter("year");
+		String month=request.getParameter("month");
+		String day=request.getParameter("day");
+		Time time=new Time(day,month,year);
+		user.setBirthday(time.getSqlDate());
+		
 		if(!errors.hasErrors()) {
 			int check = this.insert(user);
 			if (check != 0) {
@@ -178,11 +197,16 @@ public class UserController {
 //				newUser.setPassword(codeRandom);
 				model.addAttribute("user", newUser);
 			} else {
-				
+				model.addAttribute("day", time.getDay());
+				model.addAttribute("month", time.getMonth());
+				model.addAttribute("year",time.getYear());
 				model.addAttribute("message", "Thêm thất bại");
 			}
 		}
 		else {
+			model.addAttribute("day", time.getDay());
+			model.addAttribute("month", time.getMonth());
+			model.addAttribute("year",time.getYear());
 			model.addAttribute("message", "Lỗi input");
 		}
 		List<User> userList = getUserList();
@@ -190,7 +214,7 @@ public class UserController {
 		return "user/manage";
 	}
 	@RequestMapping(value="/list/{username}", params="linkDelete")
-	public String deleteUser(ModelMap model, @PathVariable("username")String username, User user) {
+	public String deleteUser(ModelMap model, @PathVariable("username")String username, User user, HttpServletRequest request) {
 		User userDelete = getUser(username);
 		int check=delete(userDelete);
 		if(check==1) {
@@ -200,12 +224,18 @@ public class UserController {
 			model.addAttribute("message", "Xóa tài khoản thất bại");
 		}
 		List<User> userList = getUserList();
+		String day=request.getParameter("day");
+		String month=request.getParameter("month");
+		String year=request.getParameter("year");
+		if(day!=null)model.addAttribute("day", day);
+		if(month!=null)model.addAttribute("month",month);
+		if(year!=null)model.addAttribute("year", year);
 		model.addAttribute("user", user);
 		model.addAttribute("userList", userList);
 		return "user/manage";
 	}
 	@RequestMapping(value="/list/{username}", params="linkEdit")
-	public String editUser(ModelMap model, @PathVariable("username")String username, User user) {
+	public String editUser(ModelMap model, @PathVariable("username")String username, User user, HttpServletRequest request) {
 		User userEdit = getUser(username);
 		if(userEdit.getLock()) {
 			userEdit.setLock(false);
@@ -218,6 +248,12 @@ public class UserController {
 		else {
 			model.addAttribute("message", "Cập nhật thất bại");
 		}
+		String day=request.getParameter("day");
+		String month=request.getParameter("month");
+		String year=request.getParameter("year");
+		if(day!=null)model.addAttribute("day", day);
+		if(month!=null)model.addAttribute("month",month);
+		if(year!=null)model.addAttribute("year", year);
 		List<User> userList = getUserList();
 		model.addAttribute("user", user);
 		model.addAttribute("userList", userList);
@@ -231,63 +267,104 @@ public class UserController {
 	
 	@RequestMapping(value="/register/form",method=RequestMethod.POST)
 	public String applyRegister(ModelMap model,@Validated @ModelAttribute("user")User user, BindingResult errors,
-			@RequestParam("password2")String password2) {
+			HttpServletRequest request) throws ParseException {
 		user.setLock(false);
 		user.setPermission("Audience");
-		if(testUsernameExist(user.getUsername())) {
-			errors.rejectValue("username", "user", "Username đã được đăng ký");
+		String repeatpass=request.getParameter("repeatpass");
+		String day=request.getParameter("day");
+		String month=request.getParameter("month");
+		String year=request.getParameter("year");
+		
+		try {
+			Time time = new Time(day,month,year);
+			user.setBirthday(time.getSqlDate());
 		}
-		if(!password2.equals(user.getPassword())) {
-			errors.rejectValue("password", "user", "Mật khẩu xác nhận không khớp");
+		catch(Exception ex){
+			errors.rejectValue("birthday", "user", "Error convert: "+ex.getMessage());
+			user.setBirthday(null);
+		}
+		if(testUsernameExist(user.getUsername())) {
+			errors.rejectValue("username", "user", "Username is existing");
+		}
+		if(!repeatpass.equals(user.getPassword())) {
+			errors.rejectValue("password", "user", "Password repeat not match");
 		}
 		if(testEmailExist(user.getEmail())) {
-			errors.rejectValue("email", "user", "Email đã được đăng ký");
+			errors.rejectValue("email", "user", "Email is existing");
 		}
 		if(!testEmailRegex(user.getEmail())) {
-			errors.rejectValue("email", "user", "Không đúng định dạng: example@gmail.com");
+			errors.rejectValue("email", "user", "Error regex: example@gmail.com");
 		}
 		if(testPhoneExist(user.getPhonenumber())) {
-			errors.rejectValue("phonenumber", "user", "Số điện thoại đã được đăng ký");
+			errors.rejectValue("phonenumber", "user", "Phonenumber is existing");
 		}
 		if(!testPhoneRegex(user.getPhonenumber())) {
-			errors.rejectValue("phonenumber", "user", "Không đúng định dạng 10 số");
-		}
-		if(user.getBirthday()==null) {
-			errors.rejectValue("birthday", "user", "Vui lòng nhập ngày sinh");
+			errors.rejectValue("phonenumber", "user", "Not match regex: 10 number");
 		}
 		if(!errors.hasErrors()) {
 			
 			int check = this.insert(user);
 			if (check != 0) {
-				model.addAttribute("message", "Đăng ký thành công");
+				model.addAttribute("message", "Sign up successfull");
 				model.addAttribute("user", new User());
 			} else {
-				model.addAttribute("password2", password2);
-				model.addAttribute("message", "Đăng ký thất bại");
+				model.addAttribute("repeatpass", repeatpass);
+				model.addAttribute("message", "Sign up fail!!!");
+				model.addAttribute("year", year);
+				model.addAttribute("day", day);
+				model.addAttribute("repeatpass", repeatpass);
 			}
 		}
 		else {
-			model.addAttribute("password2", password2);
-			model.addAttribute("message", "Lỗi input");
+			model.addAttribute("repeatpass", repeatpass);
+			model.addAttribute("message", "Error input");
+			model.addAttribute("year", year);
+			model.addAttribute("day", day);
+			model.addAttribute("repeatpass", repeatpass);
 		}
 		return "user/register";
 	}
 	
 	@RequestMapping(value="/info",method=RequestMethod.GET)
 	public String infoForm(ModelMap model) {
+		Time time = new Time();
+		time.initBySqlDate(LoginController.user.getBirthday());
 		model.addAttribute("user", LoginController.user);
+		model.addAttribute("year", time.getYear());
+		model.addAttribute("month", time.getMonth());
+		model.addAttribute("day", time.getDay());
 		model.addAttribute("btnStatus", "btnEdit");
 		return "user/info";
 	}
 	@RequestMapping(value="/info",params="btnEdit",method=RequestMethod.POST)
-	public String infoInput(ModelMap model, User user) {
-		model.addAttribute("user", user);
+	public String infoInput(ModelMap model) {
+		
+		model.addAttribute("user", LoginController.user);
+		Time time = new Time();
+		time.initBySqlDate(LoginController.user.getBirthday());
+		model.addAttribute("year", time.getYear());
+		model.addAttribute("month", time.getMonth());
+		model.addAttribute("day", time.getDay());
 		model.addAttribute("btnStatus", "btnSave");
+		
 		return "user/info";
 	}
 	@RequestMapping(value="/info",params="btnSave",method=RequestMethod.POST)
-	public String infoEdit(ModelMap model,@Validated @ModelAttribute("user")User user, BindingResult errors) {
+	public String infoEdit(ModelMap model,@Validated @ModelAttribute("user")User user, BindingResult errors, HttpServletRequest request) {
 		
+		String year=request.getParameter("year");
+		String month=request.getParameter("month");
+		String day=request.getParameter("day");
+		System.out.println(year+month+day);
+		Time time=new Time(day,month,year);
+		try {
+			
+			user.setBirthday(time.getSqlDate());
+			System.out.println(user.getBirthday().toString());
+		}
+		catch(Exception ex) {
+			errors.rejectValue("birthday", "user", "Error conver: "+ex.getMessage());
+		}
 		if(!user.getEmail().equals(LoginController.user.getEmail())&&testEmailExist(user.getEmail())) {
 			errors.rejectValue("email", "user", "Email đã được đăng ký");
 		}
@@ -312,12 +389,19 @@ public class UserController {
 			} else {
 				model.addAttribute("message", "Chỉnh sửa thất bại");
 				model.addAttribute("btnStatus", "btnSave");
+				
 			}
 		}
 		else {
-			model.addAttribute("message", "Lỗi input");
+			for(ObjectError e:errors.getAllErrors()) {
+				System.out.println(e.getDefaultMessage());
+			}
+			model.addAttribute("message", "Error input");
 			model.addAttribute("btnStatus", "btnSave");
 		}
+		model.addAttribute("year", time.getYear());
+		model.addAttribute("month", time.getMonth());
+		model.addAttribute("day", time.getDay());
 		return "user/info";
 	}
 	@RequestMapping(value="/changePassword",method=RequestMethod.GET)
