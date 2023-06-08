@@ -62,6 +62,7 @@ public class Time {
 		int year = cal.get(Calendar.YEAR); // lấy giá trị năm
 
 		this.day = String.valueOf(day);
+		if(this.day.length()==1)this.day="0"+this.day;
 		this.month = String.valueOf(month);
 		this.year = String.valueOf(year);
 	}

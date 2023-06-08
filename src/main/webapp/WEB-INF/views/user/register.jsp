@@ -43,26 +43,26 @@
                         <label class="ps-0 mb-1" for="username">Create your username</label> 
                         
                         <form:input path="username" type="text" id="username" maxlength="20" placeholder="Enter your username" class="form-control mb-4"/>
-            			<form:errors path="username" />
+            			<form:errors path="username" class="text-danger"/>
 						
                         <label class="ps-0 mb-1 " for="password">Give a password</label> 
                         <form:input path="password" maxlength="20" type="password" id="password" placeholder="Enter your password" class="form-control mb-4"/>
-            			<form:errors path="password" />
+            			<form:errors path="password" class="text-danger"/>
 						
                         <label class="ps-0 mb-1 " for="repeatpass">Confirm your password</label> 
                         <input type="password" id="repeatpass" name="repeatpass" value="${repeatpass}" maxlength="20" placeholder="Confirm your password" class="form-control mb-4">
             
                         <label class="ps-0 mb-1 " for="email">What's your email</label> 
                         <form:input path="email" type="text" maxlength="254" id="email" placeholder="Enter your email" class="form-control mb-4"/>
-						<form:errors path="email" />
+						<form:errors path="email" class="text-danger"/>
 						
                         <label class="ps-0 mb-1 " for="fullname">What's your name</label> 
                         <form:input path="fullname" type="text" maxlength="60" id="fullname" placeholder="Enter your fullname" class="form-control mb-4"/>
-						<form:errors path="fullname" />
+						<form:errors path="fullname" class="text-danger"/>
 						
 						<label class="ps-0 mb-1 " for="phone">What's your phone</label> 
                         <form:input path="phonenumber" type="text" maxlength="10" id="phonenumber" placeholder="Enter your phone" class="form-control mb-4"/>
-						<form:errors path="phonenumber" />
+						<form:errors path="phonenumber" class="text-danger"/>
 						
 						
                         <label for="" class="ps-0">When's your birthday?</label>
@@ -93,7 +93,7 @@
                                 <label for="year" style="font-weight: normal;" >Year</label>
                                 <input name="year" value="${year}" type="text" id="year" required class="form-control" placeholder="YYYY" maxlength="4" inputmode="numeric" required pattern="(([0-9][0-9][0-9][0-9]))">
                             </div>
-                            <form:errors path="birthday"/>
+                            <form:errors path="birthday" class="text-danger"/>
                         </div>
 						
 						
@@ -105,12 +105,12 @@
 								<form:option value="${nation}">${nation}</form:option>
 							</c:forEach>
 						</form:select>
-                        <form:errors path="nation"/>
+                        <form:errors path="nation" class="text-danger"/>
                         
 						
                         <div class="form-footer d-flex align-items-center flex-column mt-3">
                             <button type="submit" class="btn-submit px-5 py-3">Sign up</button>
-                            <p>You have an account? <a href="http://localhost:8080/SpotifyWeb/home/login.htm" class="Login-link">Login</a></p>
+                            <p>You have an account? <a href="/SpotifyWeb/home/login.htm" class="Login-link">Login</a></p>
                         </div>
                         <p5 class="text-danger">${message}</p5>
                         <script>

@@ -24,15 +24,17 @@
         }
     </style>
     <title>User profile</title>
-<base href ="${pageContext.servletContext.contextPath }/">
+<base href ="${pageContext.servletContext.contextPath}/">
+<link href="${pageContext.request.contextPath}/Pages/Common/style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid" style="background-color: #1C263C;">
-        <div class="row d-flex justify-content-center">
-            <div class="col-10">
+    <div class="container-fluid p-0" style="background-color: #1C263C;">
                 <div class="row">
-                    <div class="col-3 d-none d-sm-block" style="background-color: rgb(25,25,25); height: 100vh;"></div>
-                    <div class="col-12 col-sm-9 bg-white pt-4 px-5">
+                <!-- Dashboard -->
+                <%@ include file="/header/artist.jsp"%>
+                    <!-- Page body -->
+                    <div class="col-10 bg-white pt-4 px-5">
+                    <%@ include file="/header/account.jsp"%>
                     <c:if test="${btnStatus=='btnEdit'}">
                     	<h1 class="mb-4">Profile</h1>
                     </c:if>
@@ -134,7 +136,7 @@
 												<label class="fw-bold">Fullname</label>
 												<form:input path="fullname" type="text" maxlength="60" class="form-control mb-3"/>
 												<p style="color: red; font-style: oblique">
-													<form:errors path="fullname" />
+													<form:errors path="fullname" class="text-danger"/>
 												</p>
 											</div>
 											
@@ -142,7 +144,7 @@
 												<label class="fw-bold">Phonenumber</label>
 												<form:input path="phonenumber" type="text" maxlength="10" class="form-control mb-3" pattern="(0[1-9]*])"/>
 												<p style="color: red; font-style: oblique">
-													<form:errors path="phonenumber" />
+													<form:errors path="phonenumber" class="text-danger"/>
 												</p>
 											</div>
 											
@@ -150,7 +152,7 @@
 												<label class="fw-bold">Email</label>
 												<form:input path="email" type="text" maxlength="254" class="form-control mb-3"/>
 												<p style="color: red; font-style: oblique">
-													<form:errors path="email" />
+													<form:errors path="email" class="text-danger"/>
 												</p>
 											</div>
 											
@@ -188,7 +190,7 @@
 													<form:option value="${nation}">${nation}</form:option>
 												</c:forEach>
 											</form:select>
-											<form:errors path="nation"/>
+											<form:errors path="nation" class="text-danger"/>
 				                            <hr/>
 										</c:if>
 										<div >
@@ -209,8 +211,7 @@
 										</div>
 				</form:form>
 				</div>
-            </div>
-        </div>
+            </div> 
     </div>
     <script>
 	  // Tạo một biến javascript để lưu trữ giá trị của month

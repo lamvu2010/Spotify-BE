@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import ptithcm.entity.Genre;
+import ptithcm.entity.History;
 import ptithcm.entity.InformationTrack;
 import ptithcm.entity.ListTracks;
 import ptithcm.entity.Playlist;
@@ -41,6 +42,8 @@ public class ArtistController {
 	@Autowired
 	ServletContext context;
 	List<User>artistList=null;
+	
+	//Tải dữ liệu
 	public List<Playlist> getAlbumList() {
 		Session session = factory.getCurrentSession();
 		String hql = "from Playlist where user.username=:username";
@@ -59,23 +62,24 @@ public class ArtistController {
 	}
 	public List<Track> getTrackList() {
 		Session session = factory.getCurrentSession();
-		String hql = "from Track where user.username=:username and status='pending'";//Đổi đk status='fulfill'
+		String hql = "from Track where user.username=:username and status='fulfill'";
 		Query query = session.createQuery(hql);
 		query.setParameter("username", LoginController.user.getUsername());
 		List<Track> list = query.list();
 		return list;
 	}
 	public Track getTrack(Long id_track) {
-		Session session = factory.getCurrentSession();
-		String hql = "from Track where id_track=:id_track";
-		Query query = session.createQuery(hql);
-		query.setParameter("id_track", id_track);
-		Track list = (Track)query.list().get(0);
-		return list;
+		Session session=factory.getCurrentSession();
+		Track track=(Track)session.get(Track.class, id_track);
+		return track;
 	}
+	
+	
+	
 	public List<Track> getTrackAlbum(Long id_playlist) {
 		Session session = factory.getCurrentSession();
-		String hql = "from Track where user.username=:username and id_track in (select track.id_track from ListTracks where playlist.id_playlist=:id_playlist)";
+		String hql = "from Track where user.username=:username and id_track in "
+				+ "(select track.id_track from ListTracks where playlist.id_playlist=:id_playlist)";
 		Query query = session.createQuery(hql);
 		query.setParameter("username", LoginController.user.getUsername());
 		query.setParameter("id_playlist", id_playlist);
@@ -85,7 +89,8 @@ public class ArtistController {
 	public List<Track> getNotTrackAlbum(Long id_playlist) {
 		Session session = factory.getCurrentSession();
 		//Thêm đk status='fulfill'
-		String hql = "from Track where user.username=:username and id_track not in (select track.id_track from ListTracks where playlist.id_playlist=:id_playlist)";
+		String hql = "from Track where user.username=:username and status='fulfill' and id_track not in "
+				+ "(select track.id_track from ListTracks where playlist.id_playlist=:id_playlist)";
 		Query query = session.createQuery(hql);
 		query.setParameter("username", LoginController.user.getUsername());
 		query.setParameter("id_playlist", id_playlist);
@@ -112,8 +117,9 @@ public class ArtistController {
 	@ModelAttribute("artists")
 	public List<User> getArtists(){
 		Session session = factory.getCurrentSession();
-		String hql = "FROM User";
+		String hql = "FROM User where permission='Artist' and username <>:artist";
 		Query query = session.createQuery(hql);
+		query.setParameter("artist", LoginController.user.getUsername());
 		List<User> list = query.list();
 		return list;
 	}
@@ -123,45 +129,35 @@ public class ArtistController {
 		return user;
 	}
 	
+	public List<User> getFollowers(){
+		if(LoginController.user==null)return null;
+		Session session = factory.getCurrentSession();
+		String id_artist=LoginController.user.getUsername();
+		String hql = "from User where username in (select user.username from Followers where artist.username=:id_artist)";
+		Query query = session.createQuery(hql);
+		query.setParameter("id_artist",id_artist);
+		List<User> list = query.list();
+		return list;
+	}
+	
 	public Long countFollowers() {
 		Session session = factory.getCurrentSession();
 		String id_artist=LoginController.user.getUsername();
-		String hql = "select count(*) from Followers where id_artist=:id_artist";
+		String hql = "select count(*) from Followers where artist.username=:id_artist";
 		Query query = session.createQuery(hql);
 		query.setParameter("id_artist",id_artist);
 		Long count=(Long)query.uniqueResult();
 		return count;
 	}
 	
-//	public List<Track> getHistory(){
-//		Session session = factory.getCurrentSession();
-//		String username=LoginController.user.getUsername();
-//		String hql = "from Track where id_track in (select track.id_track from History where user.username=:username order by count(1))";
-//		Query query = session.createQuery(hql);
-//		query.setMaxResults(50);
-//		query.setParameter("username",username);
-//		List<Track>list=query.list();
-//		return list;
-//	}
-//	public int deleteHistory() {
-//		Session session = factory.openSession();
-//		Transaction t = session.beginTransaction();
-//		try {
-//			String hql = "DELETE FROM History WHERE track.id_track not in (select top 50 track.id_track from History where user.username=:username order by id_history desc)";
-//			Query query = session.createQuery(hql);
-//			String username=LoginController.user.getUsername();
-//			query.setParameter("username",username);
-//			query.executeUpdate();
-//			t.commit();
-//		} catch (Exception e) {
-//			t.rollback();
-//			return 0;
-//		} finally {
-//			session.close();
-//		}
-//		return 1;
-//	}
-
+	
+	
+	//views
+	@RequestMapping("/home")
+	public String getHome(ModelMap model) {
+		model.addAttribute("follow",countFollowers().toString());
+		return"artist/home";
+	}
 	public int insert(Object object) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -214,13 +210,22 @@ public class ArtistController {
 	}
 	
 	public int addTrack(Track track) {
+		if(LoginController.user==null) {
+			System.out.println("Error LoginController!!!");
+			return 0;
+		}
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
+			//Thêm bài hát
 			session.save(track);
 			Track temp=(Track)session.get(Track.class, track.getId_track());
+			
+			//Thêm bản thân nghệ sĩ
+			InformationTrack x= new InformationTrack(temp, LoginController.user);
+			session.save(x);
 			for(User artist:artistList) {
-				InformationTrack x=new InformationTrack(temp,artist);
+				x=new InformationTrack(temp,artist);
 				session.save(x);
 			}
 			t.commit();
@@ -260,7 +265,6 @@ public class ArtistController {
 		}else track.setImage(null);
 		if(!music.isEmpty()) {
 	           track.setPath(music);
-	           System.out.println(track.getPath());
 	        
 		}else errors.rejectValue("path", "track", "Please choose music");
 		if(!errors.hasErrors()) {
@@ -273,16 +277,9 @@ public class ArtistController {
 		model.addAttribute("artistList", artistList);
 		return "artist/submitTrack";
 	}
-	@RequestMapping(value = "/submitTrack", params="addArtist",method=RequestMethod.POST)
+	@RequestMapping(value = "/submitTrack/{id_artist}", params="linkAdd")
 	public String addArtist(ModelMap model,@ModelAttribute("track")Track track,
-			@RequestParam("photo")MultipartFile photo,@RequestParam("music")String music, HttpServletRequest request) {
-		if(!photo.getOriginalFilename().isEmpty()) {
-			model.addAttribute("photo", photo);
-		}
-		if(!music.isEmpty()) {
-			model.addAttribute("music", music);
-		}
-		String id_artist=request.getParameter("id_artist");
+			@PathVariable("id_artist")String id_artist) {
 		User artist=getArtist(id_artist);
 		if(!artistList.contains(artist))artistList.add(artist);
 		model.addAttribute("btnStatus", "btnSubmit");
@@ -317,16 +314,12 @@ public class ArtistController {
 		}
 		return "artist/submitTrack";
 	}
-	@RequestMapping(value="/trackList", method=RequestMethod.GET)
-	public String trackList(ModelMap model) {
-		List<Track>list=getTrackList();
-		model.addAttribute("trackList", list);
-		return"artist/trackList";
-	}
-	@RequestMapping(value="/trackList/{id_track}",params="linkEdit")
-	public String editTrack(ModelMap model,@PathVariable("id_track")Long id_track ) {
+	
+	@RequestMapping(value="/index/track/{id_track}",params="linkEdit")
+	public String editTrack(ModelMap model,@PathVariable("id_track")Long id_track , @ModelAttribute("album")Playlist album) {
 		Track track=getTrack(id_track);
-		List<Track>list=getTrackList();
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();
 		if(track!=null) {
 			if(track.getIsPublic()) {
 				track.setIsPublic(false);
@@ -338,20 +331,24 @@ public class ArtistController {
 			}
 		}
 		else model.addAttribute("message", "get track failed");
-		model.addAttribute("trackList", list);
-		return"artist/trackList";
+		
+		model.addAttribute("albumList",albumList);
+		model.addAttribute("trackList", trackList);
+		return"artist/index";
 	}
-	@RequestMapping(value="/albumList", method=RequestMethod.GET)
+	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String album(ModelMap model) {
-		List<Playlist>list=getAlbumList();
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();
 		Playlist playlist=new Playlist();
 		playlist.setUser(LoginController.user);
 		model.addAttribute("album", playlist);
-		model.addAttribute("albumList", list);
+		model.addAttribute("albumList",albumList);
+		model.addAttribute("trackList", trackList);
 		model.addAttribute("btnStatus", "btnAdd");
-		return"artist/albumList";
+		return"artist/index";
 	}
-	@RequestMapping(value="/albumList", params="btnAdd")
+	@RequestMapping(value="/index", params="btnAdd")
 	public String addAlbum(ModelMap model,@Validated @ModelAttribute("album")Playlist album, BindingResult errors,
 			@RequestParam("photo")MultipartFile photo) {
 		if(!photo.getOriginalFilename().isEmpty()) {
@@ -376,12 +373,58 @@ public class ArtistController {
 			else model.addAttribute("message", "Add album failed!");
 		}
 		else model.addAttribute("message","input error!");
-		List<Playlist>list=getAlbumList();
-		model.addAttribute("albumList", list);
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();;
+		model.addAttribute("albumList",albumList);
+		model.addAttribute("trackList", trackList);
 		model.addAttribute("btnStatus", "btnAdd");
-		return"artist/albumList";
+		return"artist/index";
 	}
-	@RequestMapping(value="/albumList/{id_playlist}",params="linkShowAlbum")
+	
+	@RequestMapping(value="/index/album/{id_playlist}",params="linkEdit")
+	public String editAlbum(ModelMap model,@PathVariable("id_playlist")Long id_playlist ) {
+		Playlist album=getAlbum(id_playlist);
+		
+		if(album!=null) {
+			if(album.getIsPublic()) {
+				album.setIsPublic(false);
+				model.addAttribute("message", "hidden successfully");
+			}
+			else {
+				album.setIsPublic(true);
+				model.addAttribute("message", "show successfully");
+			}
+		}
+		else model.addAttribute("message", "get album failed");
+		Playlist playlist=new Playlist();
+		playlist.setUser(LoginController.user);
+		model.addAttribute("album", playlist);
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();
+		model.addAttribute("albumList",albumList);
+		model.addAttribute("trackList", trackList);
+		model.addAttribute("btnStatus","btnAdd");
+		return"artist/index";
+	}
+	@RequestMapping(value="/index/album/{id_playlist}",params="linkDelete")
+	public String deleteAlbum(ModelMap model,@PathVariable("id_playlist")Long id_playlist ) {
+		
+		int check=delete(id_playlist);
+		if(check==1) {
+			model.addAttribute("message", "Delete Successfully");
+		}
+		else model.addAttribute("message", "Delete Failed!");
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();
+		Playlist playlist=new Playlist();
+		playlist.setUser(LoginController.user);
+		model.addAttribute("album", playlist);
+		model.addAttribute("albumList",albumList);
+		model.addAttribute("trackList", trackList);
+		model.addAttribute("btnStatus","btnAdd");
+		return"artist/index";
+	}
+	@RequestMapping(value="/index/album/{id_playlist}",params="linkShowAlbum")
 	public String showAlbum(ModelMap model,@PathVariable("id_playlist")Long id_playlist ) {
 		String name=getAlbum(id_playlist).getName();
 		List<Track>trackAlbum=getTrackAlbum(id_playlist);
@@ -392,10 +435,10 @@ public class ArtistController {
 		model.addAttribute("notTrackAlbum", notTrackAlbum);
 		return"artist/album";
 	}
-	@RequestMapping(value="/albumList/{id_playlist}/{id_track}",params="linkDown")
+	@RequestMapping(value="/index/album/{id_playlist}/{id_track}",params="linkDown")
 	public String downTrack(ModelMap model,@PathVariable("id_playlist")Long id_playlist,
 			@PathVariable("id_track")Long id_track, HttpServletRequest request) {
-		String name=request.getParameter("name");
+		String name=getAlbum(id_playlist).getName();
 		ListTracks listTracks=getListTracks(id_track,id_playlist);
 		int check=delete(listTracks);
 		if(check==1) {
@@ -410,10 +453,10 @@ public class ArtistController {
 		model.addAttribute("notTrackAlbum", notTrackAlbum);
 		return"artist/album";
 	}
-	@RequestMapping(value="/albumList/{id_playlist}/{id_track}",params="linkUp")
+	@RequestMapping(value="/index/album/{id_playlist}/{id_track}",params="linkUp")
 	public String upTrack(ModelMap model,@PathVariable("id_playlist")Long id_playlist,
 			@PathVariable("id_track")Long id_track, HttpServletRequest request) {
-		String name=request.getParameter("name");
+		String name=getAlbum(id_playlist).getName();
 		ListTracks listTracks=new ListTracks();
 		listTracks.setPlaylist(getAlbum(id_playlist));
 		listTracks.setTrack(getTrack(id_track));
@@ -430,45 +473,13 @@ public class ArtistController {
 		model.addAttribute("notTrackAlbum", notTrackAlbum);
 		return"artist/album";
 	}
-	@RequestMapping(value="/albumList/{id_playlist}",params="linkEdit")
-	public String editAlbum(ModelMap model,@PathVariable("id_playlist")Long id_playlist ) {
-		Playlist album=getAlbum(id_playlist);
-		List<Playlist>list=getAlbumList();
-		if(album!=null) {
-			if(album.getIsPublic()) {
-				album.setIsPublic(false);
-				model.addAttribute("message", "hidden successfully");
-			}
-			else {
-				album.setIsPublic(true);
-				model.addAttribute("message", "show successfully");
-			}
-		}
-		else model.addAttribute("message", "get album failed");
-		Playlist playlist=new Playlist();
-		playlist.setUser(LoginController.user);
-		model.addAttribute("album", playlist);
-		model.addAttribute("albumList", list);
-		model.addAttribute("btnStatus","btnAdd");
-		return"artist/albumList";
-	}
-	@RequestMapping(value="/albumList/{id_playlist}",params="linkDelete")
-	public String deleteAlbum(ModelMap model,@PathVariable("id_playlist")Long id_playlist ) {
-		
-		int check=delete(id_playlist);
-		if(check==1) {
-			model.addAttribute("message", "Delete Successfully");
-		}
-		else model.addAttribute("message", "Delete Failed!");
-		List<Playlist>list=getAlbumList();
-		Playlist playlist=new Playlist();
-		playlist.setUser(LoginController.user);
-		model.addAttribute("album", playlist);
-		model.addAttribute("albumList", list);
-		model.addAttribute("btnStatus","btnAdd");
-		return"artist/albumList";
-	}
 	
+	@RequestMapping(value="followers")
+	public String getFollowersPage(ModelMap model) {
+		model.addAttribute("follow", countFollowers().toString());
+		model.addAttribute("followers", getFollowers());
+		return "artist/followers";
+	}
 	
 	
 }

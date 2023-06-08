@@ -1,0 +1,149 @@
+.base-bnt {
+    font-weight: 650;
+    border-radius: 30px;
+}
+
+.btn-hover-scale:hover{
+    scale: 1.05;
+}
+
+.btn-spotify{
+    background-color: #1ed760;
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+}
+.spotify-color{
+    color: #1ed760;
+}
+.btn-spotify:hover{
+    scale: 1.02;
+    transition: all 0.1s ease;
+}
+
+/* Avatar bar */
+.avatar{
+    cursor: pointer;
+    position: relative;
+}
+
+.avatar .dropdown-menu{
+    display: none;
+    flex-direction: column;
+    background-color: #252525;
+    border-radius: 5px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    padding: 8px;
+}
+
+.avatar .dropdown-menu a{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+.avatar .dropdown-menu li{
+    padding: 8px;
+}
+.avatar .dropdown-menu li:hover{
+    background-color: #484848;
+}
+
+.avatar:hover .dropdown-menu{
+    display: flex;
+}
+
+/* Menu dashboard */
+.dashboard{
+    background-color: #252525;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.dashboard .dashboard-item{
+    padding: 20px;
+}
+
+.dashboard-item a{
+    color: #c1c1c1;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.dashboard-item a i{
+    margin-right: 8px;
+}
+
+.dashboard .dashboard-item:hover a{
+    color: white;
+}
+
+/* Genre card */
+.genre-card{
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative; 
+    color: white;
+    height: 100px;
+}
+
+.genre-card .genre-title{
+    position: absolute;
+    top:0;
+    left: 0;
+    margin: 10px;
+}
+
+.genre-card .genre-popup{
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.genre-card:hover .genre-popup{
+    transform: translateY(0);
+}
+
+.genre-popup button{
+    background: none;
+    border: none;
+    color:white;
+}
+
+.genre-popup .btn-edit:hover{
+    color: #1ed760;
+}
+
+.genre-popup .btn-delete:hover{
+    color: #F0134D;
+}
+
+
+
+/* Manage Tracks & Albums */
+.track-row:hover,
+.album-row:hover{
+    background-color: #ebebeb;
+}
+
+.track-row a,
+.album-row a{
+    color: black;
+    text-decoration: none;
+}
+
+.track-row a:hover,
+.album-row a:hover{
+    text-decoration: underline;
+}

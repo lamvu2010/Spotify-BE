@@ -56,7 +56,7 @@ public class ForgetPasswordController {
 		model.addAttribute("email", email);
 		if(!testEmailExist(email)) {
 			model.addAttribute("btnStatus", "sendEmail");
-			model.addAttribute("message", "Email chưa được đăng ký");
+			model.addAttribute("message", "Email is not registered!!!");
 			return"forget/requestEmail";
 		}
 		String codeRandom= Support.generateRandomString();
@@ -71,7 +71,7 @@ public class ForgetPasswordController {
 	public String confirm(ModelMap model, @RequestParam("code")String code) {
 		if(!code.equals(codeSave)) {
 			model.addAttribute("btnStatus", "sendEmail");
-			model.addAttribute("message", "Mã xác thực không chính xác. Mời gửi lại email");
+			model.addAttribute("message", "Code not match. Please send email again!!!");
 			emailSave=null;
 			return"forget/requestEmail";
 		}
@@ -99,18 +99,18 @@ public class ForgetPasswordController {
 	public String supply(ModelMap model, 
 			@RequestParam("password1")String password1,@RequestParam("password2")String password2) {
 		if(!password1.equals(password2)) {
-			model.addAttribute("message", "Mật khẩu xác nhận không trùng khớp");
+			model.addAttribute("message", "Repeat password not match!!!");
 			model.addAttribute("username", user.getUsername());
 			return "forget/changePassword";
 		}
 		user.setPassword(password1);
 		int check = this.update(user);
 		if (check != 0) {
-			model.addAttribute("message", "Cập nhật mật khẩu thành công");
+			model.addAttribute("message", "Update password successfully");
 			user=null;
-			model.addAttribute("username", "Không được thực hiện tiếp");
+			return "login";
 		} else {
-			model.addAttribute("message", "Cập nhật mật khẩu thất bại");
+			model.addAttribute("message", "Update password fail");
 			model.addAttribute("username", user.getUsername());
 		}
 		return "forget/changePassword";

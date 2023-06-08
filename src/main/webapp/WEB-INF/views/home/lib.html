@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="library.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="player.css" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
+<body class="dark">
+    <div class="container">
+        <nav class="sidebar">
+            <header>
+                <ul class="menu-links card-box general">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='fa fa-home icon' aria-hidden="true"></i>
+                            <span class="text nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='fa fa-search icon' aria-hidden="true"></i>
+                            <span class="text nav-text">Search</span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <div class="menu-bar">
+                <ul class="menu-links card-box">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='fa fa-list icon' aria-hidden="true"></i>
+                            <span class="text nav-text">Library</span>
+                        </a>    
+                        <div class="features">
+                            <i class='fa fa-plus icon'></i>
+                            <i class='fa fa-th icon view_mode'></i>
+                            <i class='fa fa-chevron-left icon toggle'></i>
+                        </div>
+                    </li>
+                    <!-- <table class="table table-lib">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Date Added</th>
+                            <th>Played</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Data 1</td>
+                            <td>Data 2</td>
+                            <td>Data 3</td>
+                          </tr>
+                          <tr>
+                            <td>Data 4</td>
+                            <td>Data 5</td>
+                            <td>Data 6</td>
+                          </tr>
+                          <tr>
+                            <td>Data 7</td>
+                            <td>Data 8</td>
+                            <td>Data 9</td>
+                          </tr>
+                        </tbody>
+                      </table> -->
+                      <div class="spotify-playlists custom-scroll">
+                        <div class="list grid-lib">
+                          <div class="item lib-focus">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                          <div class="item">
+                            <img src="https://i.scdn.co/image/ab67616d0000b2733b5e11ca1b063583df9492db" />
+                            <div class="play">
+                              <span class="fa fa-play"></span>
+                            </div>
+                            <h4>My playlist 1</h4>
+                            <p>PLaylist</p>
+                          </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+    
+        </nav>
+        
+        <div class="main-wrapper">
+            <div class="main-content custom-scroll">
+                <div class="header-main">
+                <div class="logo">
+                    <a href="#">
+                      <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png" alt="Logo" />
+                    </a>
+                </div>    
+                <div class="dropdown user-info">
+                    <button class="btn rounded-circle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="mode">
+                            <span class="mode-text">Dark mode</span>
+                            <div class="toggle-switch">
+                                <span class="switch"></span>
+                            </div>
+                        </li>
+                        <li class="">
+                            <a href="#">
+                                <i class='bx bx-log-out icon' ></i>
+                                <span class="">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+                <div class="library">
+                  <div id="container lib-details">
+                    <div class="row">
+                      <div class="col-3">
+                        <img class="cover" src="img/OIP.jpg" />
+                      </div>
+                      <div class="col-sm">
+                        <div class="row">
+                          <div class="col-8 text">
+                            <h5>My Playlist</h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-8 text playlist-name">
+                            <h1>My Playlist 1</h1>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-8 text">
+                            <h6>DaoHuyHieu - 3 songs</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table table-lib">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Album</th>
+                            <th>Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="music-elm">
+                            <td class="seri-num">1</td>
+                            <td><img class="thumbnail" src="./img/OIP.jpg" /> Nothing like the Oldschool</td>
+                            <td>Ngáo đá</td>
+                            <td>1:30</td>
+                          </tr>
+                          <tr class="music-elm">
+                            <td class="seri-num">2</td>
+                            <td><img class="thumbnail" src="./img/OIP.jpg" /> Nothing like the Oldschool</td>
+                            <td>Ngáo đá</td>
+                            <td>1:30</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <script type="text/javascript" src="./library.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50 master_play">
+        <div class="bottom-bar">
+            <div class="bottom-bar--left-col">
+                <div class="bottom-bar--left-col--song">
+                    <div class="bottom-bar--left-col--song--img">
+                        <div class="bottom-bar--left-col--song--img--pull-up">
+                            <i class='fa fa-chevron-up'></i>
+                        </div>
+                        <img src="http://via.placeholder.com/150x150" alt="">
+                    </div>
+                    <div class="bottom-bar--left-col--song--details">
+                        <div class="bottom-bar--left-col--song--details--wrapper">
+                            <a href="#" class="bottom-bar--left-col--song--details--title">Song Title</a>
+                        </div>
+                        <div class="bottom-bar--left-col--song--details--wrapper">
+                            <a href="#" class="bottom-bar--left-col--song--details--artist">Artist</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-bar--left-col--actions">
+                    <button class="bottom-bar--left-col--actions--favorite">
+                        <i class='fa fa-heart'></i>
+                    </button>
+                    <button class="bottom-bar--left-col--actions--pip">
+                        <i class="pip-icon"></i>
+                    </button>
+                </div>
+                
+                <audio id="player" src="./Walking in the Air.mp3"></audio>
+                <div class="player">
+                  <div class="control">
+                    <i class="fas fa-play" id="playbtn"></i>
+                  </div>
+                  <div class="bar">
+                    <div id="progress"></div>
+                  </div>
+                  <div id="current">0:00</div>
+                </div>
+                <script src="./player.js"></script>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="test.js" />
+</body>
+</html>
+

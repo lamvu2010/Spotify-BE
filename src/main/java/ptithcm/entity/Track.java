@@ -39,8 +39,8 @@ public class Track {
 	private boolean isPublic;
 	@Column(name="Status")
 	private String status;
-//	@OneToMany(mappedBy="track",fetch=FetchType.EAGER)
-//	private List<InformationTrack> informationTracks;
+	@OneToMany(mappedBy="track",fetch=FetchType.EAGER)
+	private List<InformationTrack> informationTracks;
 	
 	public Track() {
 		isPublic=false;
@@ -113,11 +113,11 @@ public class Track {
 		this.status = status;
 	}
 
-//	public List<InformationTrack> getInformationTracks() {
-//		return informationTracks;
-//	}
-//
-//	public void setInformationTracks(List<InformationTrack> informationTracks) {
-//		this.informationTracks = informationTracks;
-//	}
+	public List<InformationTrack> getInformationTracks() {
+		return informationTracks;
+	}
+
+	public void setInformationTracks(List<InformationTrack> informationTracks) {
+		this.informationTracks = informationTracks;
+	}
 }

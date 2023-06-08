@@ -64,7 +64,7 @@ public class LoginController {
 						sessionUser.setAttribute("permission", user.getPermission());
 						if(user.getPermission().equals("Audience")) {
 							model.addAttribute("message", "Đăng nhập thành công với quyền hạn người nghe");
-							return"login";
+							return"redirect:http://localhost:8080/SpotifyWeb/audience/home.htm";
 						}
 						else if(user.getPermission().equals("Admin")) {
 							model.addAttribute("message", "Đăng nhập thành công với quyền hạn quản trị website");
@@ -72,7 +72,7 @@ public class LoginController {
 						}
 						else if(user.getPermission().equals("Artist")) {
 							model.addAttribute("message", "Đăng nhập thành công với quyền hạn nghệ sĩ");
-							return"login";
+							return"redirect:http://localhost:8080/SpotifyWeb/artist/home.htm";
 						}
 					}
 					
