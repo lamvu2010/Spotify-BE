@@ -1,0 +1,32 @@
+.library {
+    height: 92%;
+    padding: 0 20px;
+    margin-top: 100px;
+}
+
+
+.lib-details {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.lib-details .seri-num:hover {
+    background-color: aqua;
+}
+
+.lib-details .playlist-name {
+    font-weight: bold;
+}
+
+.thumbnail {
+    height: 50px;
+}
+
+.cover {
+    height: 200px;
+}
+
+.table-lib > tbody > tr {
+    cursor: pointer;
+}

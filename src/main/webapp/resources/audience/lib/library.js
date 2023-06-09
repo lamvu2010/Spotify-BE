@@ -1,0 +1,1 @@
+const serialNum = document.getElementById('seri-num');

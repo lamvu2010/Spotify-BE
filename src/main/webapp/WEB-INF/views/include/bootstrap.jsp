@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.rtl.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.rtl.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap.rtl.min.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.min.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.rtl.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.rtl.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.rtl.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-grid.rtl.min.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-reboot.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-reboot.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-reboot.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-reboot.min.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.min.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.rtl.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.rtl.css.map">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.rtl.min.css">
+<link rel="stylesheet" href="/resources/dist/css/bootstrap-utilities.rtl.min.css.map">
+
+
