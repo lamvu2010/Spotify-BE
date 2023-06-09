@@ -473,13 +473,11 @@ public class ArtistController {
 		model.addAttribute("notTrackAlbum", notTrackAlbum);
 		return"artist/album";
 	}
-	
+
 	@RequestMapping(value="followers")
 	public String getFollowersPage(ModelMap model) {
 		model.addAttribute("follow", countFollowers().toString());
 		model.addAttribute("followers", getFollowers());
 		return "artist/followers";
 	}
-	
-	
 }

@@ -4,6 +4,6 @@
 <title>Trang chủ</title>
 </head>
 <body>
-  <script>window.location="http://localhost:8080/SpotifyWeb/home/login.htm";</script>
+  <script>window.location="/SpotifyWeb/home/login.htm";</script>
 </body>
 </html>

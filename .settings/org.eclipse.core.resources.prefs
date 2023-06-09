@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+
 encoding//src/main/webapp/WEB-INF/views/forget/changePassword.jsp=UTF-8
+
+encoding//src/main/webapp/WEB-INF/views/audience/lib.jsp=UTF-8
+
