@@ -468,7 +468,4 @@ public class ArtistController {
 		model.addAttribute("btnStatus","btnAdd");
 		return"artist/albumList";
 	}
-	
-	
-	
 }
