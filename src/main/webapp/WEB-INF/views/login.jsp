@@ -82,8 +82,8 @@
                             background-color: #fff; 
                             color: #878787;
                             border: 1px solid #878787;
-                        " onclick="location.href='http://localhost:8080/SpotifyWeb/home/login.htm'"
-									type="button">Tải lại trang</button>
+                        " onclick="location.href='/SpotifyWeb/home/login.htm'"
+									type="button">Refresh</button>
                     </div>
                 </form>
             </div>  

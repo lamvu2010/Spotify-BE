@@ -1,6 +1,7 @@
 package ptithcm.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.sql.Date;
 import java.lang.Long;
 
@@ -38,6 +39,9 @@ public class Track {
 	private boolean isPublic;
 	@Column(name="Status")
 	private String status;
+	@OneToMany(mappedBy="track",fetch=FetchType.EAGER)
+	private List<InformationTrack> informationTracks;
+	
 	public Track() {
 		isPublic=false;
 		status="pending";
@@ -107,5 +111,13 @@ public class Track {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<InformationTrack> getInformationTracks() {
+		return informationTracks;
+	}
+
+	public void setInformationTracks(List<InformationTrack> informationTracks) {
+		this.informationTracks = informationTracks;
 	}
 }

@@ -23,7 +23,9 @@ public class Mailer {
 			mailer.send(mail);
 		}
 		catch(Exception ex) {
+			System.out.println(ex.getMessage());
 			throw new RuntimeException(ex);
+			
 		}
 	}
 }

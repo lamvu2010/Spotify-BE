@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../Pages/Common/style.css">
+    <title>Genre</title>
+</head>
+<body>
+    <div class="container-fluid" style="background-color: #1C263C;">
+        <div class="row d-flex justify-content-center" style="height: 100vh;">
+            <div class="col-11">
+                <div class="row">
+                    <!-- Dashboard Here -->
+                    <div class="col-3 d-none d-md-block dashboard">
+                        <div class="row dashboard-item">
+                            <a href="./home.html" class="">
+                                <i class="fa-solid fa-house"></i>
+                                Home
+                            </a>
+                        </div>
+                        <div class="row dashboard-item">
+                            <a href="./manageGenre.html" class="">
+                                <i class="fa-sharp fa-solid fa-shapes"></i>
+                                Genres
+                            </a>
+                        </div>
+                        <div class="row dashboard-item">
+                            <a href="./managePendingTracks.html" class="text-white">
+                                <i class="fa-solid fa-music"></i>
+                                Track
+                            </a>
+                        </div>
+                        <div class="row dashboard-item">
+                            <a href="./createAccount.html" class="">
+                                <i class="fa-solid fa-music"></i>
+                                Account
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Tracks Page Here -->
+                    <div class="col-12 col-md-9 bg-white pt-4 px-3 overflow-auto">
+                        <!-- Top Bar -->
+                        <div class="topBar d-flex justify-content-end fs-2">
+                            <div class="Annouce me-3">
+                                <i class="fa-solid fa-bell"></i>
+                            </div>
+                            <div class="avatar">
+                                <i class="fa-sharp fa-solid fa-circle-user"></i>
+                                <ul class="dropdown-menu">
+                                    <li><a href="">Account</a></li>
+                                    <li><a href="">Profile</a></li>
+                                    <li><a href="">Setting</a></li>
+                                    <hr class="text-white"/>
+                                    <li><a href="">Log out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Page Title -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            
+                        </div>
+                        <!-- Page Body -->
+                        <!-- Track space -->
+                        <div class="row tracks-space">
+                            <div class="bg-dark text-white ps-3 py-2 track-dropdown" style="cursor: pointer;" id="track-dropdown">
+                                <h5>Tracks
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </h5>
+                            </div>
+                            <!-- Track list -->
+                            <div class="d-none" id="track-dropdown-menu">
+                                <!-- One track row -->
+                                <div class="row fs-5 d-flex align-items-center track-row">
+                                    <div class="col-md-4 col-5 col-lg-5 overflow-hidden">
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                        <a href="#">Vần trăng khóc</a>
+                                    </div>
+        
+                                    <div class="col">
+                                        <a href="">Tuấn Hưng</a>
+                                    </div>
+        
+                                    <div class="col d-none d-md-block">
+                                        3:15
+                                    </div>
+        
+                                    <div class="col fs-2 d-flex align-items-center justify-content-evenly">
+                                        <button class="btn-spotify">
+                                            <i class="fa-solid fa-check text-white"></i>
+                                        </button>
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-xmark text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- One track row -->
+                                <div class="row fs-5 d-flex align-items-center track-row">
+                                    <div class="col-md-4 col-5 col-lg-5 overflow-hidden">
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                        <a href="#">Ưng quá chừng</a>
+                                    </div>
+        
+                                    <div class="col">
+                                        <a href="">Amee</a>
+                                    </div>
+        
+                                    <div class="col d-none d-md-block">
+                                        4:05
+                                    </div>
+        
+                                    <div class="col fs-2 d-flex align-items-center justify-content-evenly">
+                                        <button class="btn-spotify">
+                                            <i class="fa-solid fa-check text-white"></i>
+                                        </button>
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-xmark text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- One track row -->
+                                <div class="row fs-5 d-flex align-items-center track-row">
+                                    <div class="col-md-4 col-5 col-lg-5 overflow-hidden">
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                        <a href="#">Tháng tư là lời nói dối của em</a>
+                                    </div>
+        
+                                    <div class="col">
+                                        <a href="">Hà Anh Tuấn</a>
+                                    </div>
+        
+                                    <div class="col d-none d-md-block">
+                                        5:18
+                                    </div>
+        
+                                    <div class="col fs-2 d-flex align-items-center justify-content-evenly">
+                                        <button class="btn-spotify">
+                                            <i class="fa-solid fa-check text-white"></i>
+                                        </button>
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-xmark text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Album space -->
+                        <div class="row albums-space">
+                            <div class="bg-dark text-white ps-3 py-2 album-dropdown" style="cursor: pointer;" id="album-dropdown">
+                                <h5>Albums
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </h5>
+                            </div>
+                            <!-- Album list -->
+                            <div class="d-none" id="album-dropdown-menu">
+                                <!-- One album row -->
+                                <div class="row fs-5 d-flex align-items-center album-row">
+                                    <div class="col-md-4 col-5 col-lg-5 overflow-hidden">
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                        <a href="#">Alan music</a>
+                                    </div>
+        
+                                    <div class="col">
+                                        <a href="">Alan Walker</a>
+                                    </div>
+        
+                                    <div class="col d-none d-md-block">
+                                        6
+                                    </div>
+        
+                                    <div class="col fs-2 d-flex align-items-center justify-content-evenly">
+                                        <button class="btn-spotify">
+                                            <i class="fa-solid fa-check text-white"></i>
+                                        </button>
+                                        <button style="background: none; border: none;" class="btn-hover-scale">
+                                            <i class="fa-solid fa-xmark text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        var trackDropdown = document.querySelector(".track-dropdown");
+        var trackMenu = document.getElementById("track-dropdown-menu");
+        trackDropdown.addEventListener("click", function(){
+            if(trackMenu.style.display != "block"){
+                trackMenu.classList.remove("d-none");
+                trackMenu.style.display = "block";
+                
+            }
+            else{
+                trackMenu.style.display = "none";
+            }
+
+        });
+
+        var albumDropdown = document.querySelector(".album-dropdown");
+        var albumMenu = document.getElementById("album-dropdown-menu");
+        albumDropdown.addEventListener("click", function(){
+            if(albumMenu.style.display != "block"){
+                albumMenu.classList.remove("d-none");
+                albumMenu.style.display = "block";
+            }
+            else{
+                albumMenu.style.display = "none";
+            }
+
+        });
+
+
+
+    </script>
+</body>
+</html>

@@ -38,136 +38,30 @@
             <div class="col-10 px-5 p-5 overflow-auto" style="height: 100vh;">
                 <div class="row d-flex flex-column align-items-center">
                 <%@ include file="/header/account.jsp"%>
-                    <button onclick="location.href='/SpotifyWeb/artist/submitTrack.htm'" class="btn-spotify col-3 mb-3">Refresh</button>
-                    <p5 class="text-danger text-center">${message}</p5>
+                    <button onclick="location.href='/SpotifyWeb/artist/followers.htm'" class="btn-spotify col-3 mb-3">Refresh</button>
+                    
                 </div>
-                <form:form modelAttribute="track" action="/SpotifyWeb/artist/submitTrack.htm" method="POST" enctype="multipart/form-data" class="row form">
-                	<form:hidden path="id_track"/>
-					<form:hidden path="uploadDate"/>
-					<form:hidden path="like"/>
-					<form:hidden path="status"/>
-					<form:hidden path="user.username"/>
-					<form:hidden path="path"/>
-					<form:hidden path="image"/>
-                    <!-- Buttons -->
-                    <div class="d-flex justify-content-center">
-                        <c:if test="${btnStatus=='btnSubmit'}">
-								<button name="btnSubmit" id="btnSubmit" type="submit" class="btn-spotify">Submit</button>
-							</c:if>
-							<c:if test="${btnStatus=='btnConfirm'}">
-								<button name="btnConfirm" class="btn-spotify">Confirm</button>
-							</c:if>
-                    </div>
-                    <!-- isPublic input -->
-                    <div class="d-flex justify-content-center mt-2">
-                        <div class="mx-3">
-                            <form:radiobutton path="isPublic" value="True" id="radioPublic"></form:radiobutton>
-                            <label for="radioPublic">Public</label>
-                        </div>
-                        <div class="mx-3">
-                            <form:radiobutton path="isPublic" value="False" id="radioPrivate" ></form:radiobutton>
-                            <label for="radioPrivate">Private</label>
-                        </div>
-                        <form:errors path="isPublic" class="text-danger"/>
-                    </div>
-                    <label class="ps-0 mb-1 fw-bold" for="username">What is Track's name?</label> 
-                        <form:input path="name" id="name" type="text" maxlength="50"  placeholder="Enter track name" class="form-control mb-4"/>
-						<form:errors path="name" class="text-danger"/>
-						
-					<h5 class="text-danger">Please add other artists before choose photo or track</h5>
-                    <c:if test="${btnStatus=='btnSubmit'}">
-	                        <label class="form-label fw-bold" for="image">Choose a photo for track</label>
-	                        <input type="file" name="photo" class="form-control">
-	                        <form:errors path="image" class="text-danger"/>
-                     </c:if>
-                        
-                    <c:if test="${btnStatus=='btnConfirm'}">
-							<c:if test="${track.image!=null}">
-							<label class="form-label fw-bold" for="image">This is track's photo</label>
-							<img width="31" height="31" src="<c:url value='/resources/img/track/${track.image}'/> "/>
-							</c:if>
-					</c:if>
-					
-					
-					<c:if test="${btnStatus=='btnSubmit'}">
-					<label for="music" class="form-label fw-bold">Upload your music</label>
-					<div class="d-flex justify-content-between w-100 p-0">
-                        <input type="file" id="fileInput" accept="audio/*" class="form-control ms-0">
-                    </div>
-							<form:errors path="path" class="text-danger"/>
-							<div>
-								<textarea id="mp3String" cols="100" rows="2">
-								</textarea>
-							</div>
-									
-							<input type="hidden" name="music" id="music"/>
-					</c:if>
-					<c:if test="${btnStatus=='btnConfirm'}">
-					<label for="music" class="form-label fw-bold">This is your track</label>
-						<div class="d-flex justify-content-between w-100 p-0">
-                        	
-                        	<audio src="data:audio/mp3;base64,${track.path}" controls style="height: 36px; width: 100%;" class="ms-4"></audio>
-                    	</div>
-					</c:if>
-                    
-                    
-
-                    <label for="genre" class="form-label fw-bold">Choose track's genre</label>
-                    <form:select path="genre.id_genre" items="${genreList}" 
-							itemValue="id_genre" itemLabel="type"  class="form-select"/>
-					<form:errors path="genre.id_genre" class="text-danger"/>
-
-                    <!-- Table Current Track Artists -->
-                    <div class="w-100 btn-spotify text-center py-2 my-3">Current Track Artist</div>
-                    <table class="table" id="currentArtistTable">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Fullname</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="artist" items="${artistList}">
-                                <tr>
-                                    <td>${artist.username}</td>
-                                    <td>${artist.fullname}</td>
-                                    <td>
-                                        <button onclick="location.href='/SpotifyWeb/artist/submitTrack/${artist.username}.htm?linkDelete'" class="moveRow" style="border: none; background: none;">
-                                            <i class="fa-solid fa-xmark text-danger fs-3 fw-bolder hover-scale"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <c:if test="${btnStatus=='btnSubmit'}">
+                <h2 class="text-success">Today, There are ${follow} people follow you</h2>
+                <form class="row form">
                     <!-- Tabel Artists -->
-                    <div class="w-100 bg-info text-center py-2 my-3 fw-bold">Artists</div>
+                    <div class="w-100 bg-info text-center py-2 my-3 fw-bold">Followers</div>
                     <table class="table" id="artistTable">
                         <thead>
                             <tr>
                                 <th>Username</th>
                                 <th>Fullname</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="artist" items="${artists}">
+                            <c:forEach var="follower" items="${followers}">
                                 <tr>
-                                    <td>${artist.username}</td>
-                                    <td>${artist.fullname}</td>
-                                    <td>
-                                        <button onclick="location.href='/SpotifyWeb/artist/submitTrack/${artist.username}.htm?linkAdd'" class="moveRow" style="border: none; background: none;">
-                                            <i class="fa-sharp fa-solid fa-user-plus"></i>
-                                        </button>
-                                    </td>
+                                    <td>${follower.username}</td>
+                                    <td>${follower.fullname}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-                    </c:if>
-                </form:form>
+                </form>
             </div>
         
 

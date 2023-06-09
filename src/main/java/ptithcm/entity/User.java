@@ -1,36 +1,37 @@
 package ptithcm.entity;
 
 import java.sql.Date;
+import java.util.Comparator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="[User]")
-public class User {
+public class User implements Comparator<User>{
 	@Id
 	@Column(name="Username")
-	@NotBlank(message="Vui lòng nhập username")
+	@NotBlank(message="Please input your username")
 	private String username;
 	@Column(name="Password")
-	@NotBlank(message="Vui lòng nhập password")
+	@NotBlank(message="Please input your password")
 	private String password;
 	@Column(name="Fullname")
-	@NotBlank(message="Vui lòng nhập họ và tên của bạn")
+	@NotBlank(message="Please input your fullname")
 	private String fullname;
 	@Column(name="Birthday")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	@Column(name="Phonenumber")
-	@NotBlank(message="Vui lòng nhập số điện thoại")
+	@NotBlank(message="Please input your phonenumber")
 	private String phonenumber;
 	@Column(name="Nation")
-	@NotBlank(message="Vui lòng nhập quốc gia")
+	@NotBlank(message="Please choose nation")
 	private String nation;
 	@Column(name="Email")
-	@NotBlank(message="Vui lòng nhập email")
+	@NotBlank(message="Please input your email")
 	private String email;
 	@Column(name="Lock")
 	private Boolean lock;
@@ -95,6 +96,21 @@ public class User {
 	}
 	public void setPermission(String permission) {
 		this.permission = permission;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+            User node = (User) obj;
+            if (this.username.equals(node.username)) {
+                return true;
+            }
+        }
+        return false;
+	}
+	@Override
+	public int compare(User o1, User o2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
