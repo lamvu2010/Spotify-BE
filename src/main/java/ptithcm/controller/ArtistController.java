@@ -68,13 +68,20 @@ public class ArtistController {
 		List<Track> list = query.list();
 		return list;
 	}
+//	public Track getTrack(Long id_track) {
+//		Session session=factory.getCurrentSession();
+//		Track track=(Track)session.get(Track.class, id_track);
+//		return track;
+//	}
+	
 	public Track getTrack(Long id_track) {
-		Session session=factory.getCurrentSession();
-		Track track=(Track)session.get(Track.class, id_track);
-		return track;
+		Session session = factory.getCurrentSession();
+		String hql = "from Track where id_track=:id_track";
+		Query query = session.createQuery(hql);
+		query.setParameter("id_track", id_track);
+		Track list = (Track)query.list().get(0);
+		return list;
 	}
-	
-	
 	
 	public List<Track> getTrackAlbum(Long id_playlist) {
 		Session session = factory.getCurrentSession();
@@ -189,6 +196,38 @@ public class ArtistController {
 		return 1;
 	}
 	
+	public int update(Object object) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.update(object);
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.out.println(e.getMessage());
+			return 0;
+		} finally {
+			session.close();
+		}
+		return 1;
+	}
+	
+	public int merge(Object object) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.merge(object);
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.out.println(e.getMessage());
+			return 0;
+		} finally {
+			session.close();
+		}
+		return 1;
+	}
+	
 	public int delete(Long id_playlist) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -256,6 +295,7 @@ public class ArtistController {
 		if(!photo.getOriginalFilename().isEmpty()) {
 		try {
 			String photoPath=context.getRealPath("/resources/img/track/"+photo.getOriginalFilename());
+			System.out.println(photoPath);
 				photo.transferTo(new File(photoPath));
 				track.setImage(photo .getOriginalFilename());
 			}
@@ -318,20 +358,24 @@ public class ArtistController {
 	@RequestMapping(value="/index/track/{id_track}",params="linkEdit")
 	public String editTrack(ModelMap model,@PathVariable("id_track")Long id_track , @ModelAttribute("album")Playlist album) {
 		Track track=getTrack(id_track);
-		List<Playlist>albumList=getAlbumList();
-		List<Track>trackList=getTrackList();
+		
 		if(track!=null) {
 			if(track.getIsPublic()) {
 				track.setIsPublic(false);
-				model.addAttribute("message", "hidden successfully");
+				int result=this.merge(track);
+				if(result==1)model.addAttribute("message", "hidden successfully");
+				else model.addAttribute("message", "hidden fail!!!");
 			}
 			else {
 				track.setIsPublic(true);
-				model.addAttribute("message", "show successfully");
+				int result=this.merge(track);
+				if(result==1)model.addAttribute("message", "show successfully");
+				else model.addAttribute("message", "show fail!!!");
 			}
 		}
 		else model.addAttribute("message", "get track failed");
-		
+		List<Playlist>albumList=getAlbumList();
+		List<Track>trackList=getTrackList();
 		model.addAttribute("albumList",albumList);
 		model.addAttribute("trackList", trackList);
 		return"artist/index";
@@ -388,11 +432,15 @@ public class ArtistController {
 		if(album!=null) {
 			if(album.getIsPublic()) {
 				album.setIsPublic(false);
-				model.addAttribute("message", "hidden successfully");
+				int result=this.update(album);
+				if(result==1)model.addAttribute("message", "hidden successfully");
+				else model.addAttribute("message", "hidden fail!!!");
 			}
 			else {
 				album.setIsPublic(true);
-				model.addAttribute("message", "show successfully");
+				int result=this.update(album);
+				if(result==1)model.addAttribute("message", "show successfully");
+				else model.addAttribute("message", "show fail!!!");
 			}
 		}
 		else model.addAttribute("message", "get album failed");

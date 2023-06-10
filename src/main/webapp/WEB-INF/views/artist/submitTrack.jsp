@@ -85,7 +85,7 @@
 							<c:if test="${track.image!=null}">
 							<label class="form-label fw-bold" for="image">This is track's photo</label>
 							<div>
-							<img width="100" height="100" src="<c:url value='/resources/img/track/${track.image}'/> "/></div>
+							<img width="100" height="100" src="${pageContext.servletContext.contextPath}/resources/img/track/${track.image}"/></div>
 							</c:if>
 					</c:if>
 					
