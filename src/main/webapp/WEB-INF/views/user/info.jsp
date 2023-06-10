@@ -31,7 +31,15 @@
     <div class="container-fluid p-0" style="background-color: #1C263C;">
                 <div class="row">
                 <!-- Dashboard -->
-                <%@ include file="/header/artist.jsp"%>
+                <c:if test="${sessionScope.permission=='Artist'}">
+            	<%@ include file="/header/artist.jsp"%>
+	            </c:if>
+	            <%-- <c:if test="${sessionScope.permission=='Admin'}">
+	            	<%@ include file="/header/admin.jsp"%>
+	            </c:if>
+	            <c:if test="${sessionScope.permission=='Audience'}">
+	            	<%@ include file="/header/audience.jsp"%>
+	            </c:if> --%>
                     <!-- Page body -->
                     <div class="col-10 bg-white pt-4 px-5">
                     <%@ include file="/header/account.jsp"%>

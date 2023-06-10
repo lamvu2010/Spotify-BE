@@ -217,7 +217,8 @@ public class ArtistController {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
-			//Thêm bài hát
+			
+			track.setUser(LoginController.user);
 			session.save(track);
 			Track temp=(Track)session.get(Track.class, track.getId_track());
 			
@@ -231,6 +232,7 @@ public class ArtistController {
 			t.commit();
 		} catch (Exception e) {
 			t.rollback();
+			System.out.println(e.getMessage());
 			return 0;
 		} finally {
 			session.close();
@@ -243,8 +245,6 @@ public class ArtistController {
 		Track newTrack=new Track();
 		if(artistList==null)artistList=new ArrayList<User>();
 		if(!artistList.isEmpty())artistList.removeAll(artistList);
-		
-		newTrack.setUser(LoginController.user);
 		model.addAttribute("track", newTrack);
 		model.addAttribute("btnStatus", "btnSubmit");
 		model.addAttribute("artistList", artistList);
@@ -304,9 +304,9 @@ public class ArtistController {
 		if(check==1) {
 			model.addAttribute("message", "submit successfully");
 			Track newTrack=new Track();
-			newTrack.setUser(LoginController.user);
 			model.addAttribute("track", newTrack);
 			model.addAttribute("btnStatus", "btnSubmit");
+			if(!artistList.isEmpty())artistList.removeAll(artistList);
 		}
 		else {
 			model.addAttribute("message","submit failed");

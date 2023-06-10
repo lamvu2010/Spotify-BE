@@ -82,7 +82,7 @@
                         
 						</form:form>
 						
-				<h5 class="text-danger">${message}</h5>
+				<h3 class="text-danger">${message}</h3>
 				
                 <!-- Track -->
                 <div class="row">

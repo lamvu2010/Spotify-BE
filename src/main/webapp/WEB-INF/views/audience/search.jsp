@@ -24,7 +24,8 @@
 <link rel="stylesheet" href="./resources/audience/lib/player.css" />
 <link rel="stylesheet"
 	href="path/to/font-awesome/css/font-awesome.min.css">
-
+<script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 <title>Document</title>
 
@@ -116,7 +117,7 @@
 					</div>
 				</div>
 				<div class="library">
-					<table class="table table-lib">
+					<table class="table table-lib" id="trackTable">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -172,6 +173,16 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 	<script src="./resources/audience/lib/test.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#trackTable').DataTable();
+        });
+      </script>
 </body>
 </html>
 

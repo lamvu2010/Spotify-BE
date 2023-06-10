@@ -39,14 +39,13 @@
                 <div class="row d-flex flex-column align-items-center">
                 <%@ include file="/header/account.jsp"%>
                     <button onclick="location.href='/SpotifyWeb/artist/submitTrack.htm'" class="btn-spotify col-3 mb-3">Refresh</button>
-                    <p5 class="text-danger text-center">${message}</p5>
+                    <h3 class="text-danger text-center">${message}</h3>
                 </div>
                 <form:form modelAttribute="track" action="/SpotifyWeb/artist/submitTrack.htm" method="POST" enctype="multipart/form-data" class="row form">
                 	<form:hidden path="id_track"/>
 					<form:hidden path="uploadDate"/>
 					<form:hidden path="like"/>
 					<form:hidden path="status"/>
-					<form:hidden path="user.username"/>
 					<form:hidden path="path"/>
 					<form:hidden path="image"/>
                     <!-- Buttons -->
@@ -74,8 +73,9 @@
                         <form:input path="name" id="name" type="text" maxlength="50"  placeholder="Enter track name" class="form-control mb-4"/>
 						<form:errors path="name" class="text-danger"/>
 						
-					<h5 class="text-danger">Please add other artists before choose photo or track</h5>
+					
                     <c:if test="${btnStatus=='btnSubmit'}">
+                    <h5 class="text-danger">Please add other artists before choose photo or track</h5>
 	                        <label class="form-label fw-bold" for="image">Choose a photo for track</label>
 	                        <input type="file" name="photo" class="form-control">
 	                        <form:errors path="image" class="text-danger"/>
@@ -84,7 +84,8 @@
                     <c:if test="${btnStatus=='btnConfirm'}">
 							<c:if test="${track.image!=null}">
 							<label class="form-label fw-bold" for="image">This is track's photo</label>
-							<img width="31" height="31" src="<c:url value='/resources/img/track/${track.image}'/> "/>
+							<div>
+							<img width="100" height="100" src="<c:url value='/resources/img/track/${track.image}'/> "/></div>
 							</c:if>
 					</c:if>
 					
@@ -110,14 +111,13 @@
                     	</div>
 					</c:if>
                     
-                    
-
                     <label for="genre" class="form-label fw-bold">Choose track's genre</label>
                     <form:select path="genre.id_genre" items="${genreList}" 
 							itemValue="id_genre" itemLabel="type"  class="form-select"/>
 					<form:errors path="genre.id_genre" class="text-danger"/>
 
                     <!-- Table Current Track Artists -->
+                    <form>
                     <div class="w-100 btn-spotify text-center py-2 my-3">Current Track Artist</div>
                     <table class="table" id="currentArtistTable">
                         <thead>
@@ -132,11 +132,13 @@
                                 <tr>
                                     <td>${artist.username}</td>
                                     <td>${artist.fullname}</td>
+                                    <c:if test="${btnStatus=='btnSubmit'}">
                                     <td>
                                         <button onclick="location.href='/SpotifyWeb/artist/submitTrack/${artist.username}.htm?linkDelete'" class="moveRow" style="border: none; background: none;">
                                             <i class="fa-solid fa-xmark text-danger fs-3 fw-bolder hover-scale"></i>
                                         </button>
                                     </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -167,6 +169,7 @@
                         </tbody>
                     </table>
                     </c:if>
+                    </form>
                 </form:form>
             </div>
         
