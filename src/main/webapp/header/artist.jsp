@@ -25,7 +25,7 @@
                 </div>
                 <div class="row dashboard-item">
                     <a href="/SpotifyWeb/artist/followers.htm">
-                        <i class="fa-sharp fa-solid fa-shapes"></i>
+                        <i class="fa-sharp fa-solid fa-circle-user"></i>
                         Followers
                     </a>
                 </div>

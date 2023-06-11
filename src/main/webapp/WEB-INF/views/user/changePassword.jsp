@@ -46,7 +46,15 @@
 <div class="container-fluid p-0">
         <div class="row-cols-2 d-flex justify-content-center" style="height: 100vh;">
             <!-- Dashboard Here -->
-            <%@ include file="/header/artist.jsp"%>
+            <c:if test="${sessionScope.permission=='Artist'}">
+            	<%@ include file="/header/artist.jsp"%>
+            </c:if>
+            <%-- <c:if test="${sessionScope.permission=='Admin'}">
+            	<%@ include file="/header/admin.jsp"%>
+            </c:if>
+            <c:if test="${sessionScope.permission=='Audience'}">
+            	<%@ include file="/header/audience.jsp"%>
+            </c:if> --%>
             <!-- Tracks Page Here -->
             <div class="col-10 bg-white pt-4 px-5 overflow-auto" style="height: 100vh;">
                 <!-- Top Bar -->
