@@ -18,7 +18,7 @@ public class Track {
 	@Column(name="Id_track")
 	private Long id_track;
 	@Column(name="Name")
-	@NotBlank(message="Vui lòng nhập name")
+	@NotBlank(message="Please input name")
 	private String name;
 	@Column(name="Path")
 	private String path;

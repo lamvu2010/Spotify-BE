@@ -44,7 +44,7 @@
                 <!-- Page Body -->
                 <div class="row d-flex justify-content-center">
 				<h1 class="text-success">${name}</h1>
-				<h5 class="text-danger">${message}</h5>
+				<h3 class="text-danger">${message}</h3>
 				
                 <!-- Track -->
                 <div class="row">

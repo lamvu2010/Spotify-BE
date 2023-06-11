@@ -25,7 +25,8 @@
 <link rel="stylesheet" href="./resources/audience/lib/player.css" />
 <link rel="stylesheet"
 	href="path/to/font-awesome/css/font-awesome.min.css">
-
+<script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 <title>Document</title>
 
