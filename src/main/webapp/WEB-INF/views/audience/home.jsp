@@ -10,6 +10,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="${pageContext.servletContext.contextPath }/">
+<link href="${pageContext.request.contextPath}/Pages/Common/style.css" rel="stylesheet">
+
 <title>Document</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,6 +28,7 @@
 	href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body class="dark">
+
 	<div class="container">
 		<nav class="sidebar">
 			<header>
@@ -55,7 +58,7 @@
 					</ul>
 					<div class="spotify-playlists custom-scroll">
 						<div class="list grid-lib">
-							<form action="/SpotifyWeb/audience/showLoveSongs.htm">
+							<form action="/SpotifyWeb/audience/library.htm">
 								<div class="item text-center" id="lovesongs" >
 									<img
 										src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
@@ -65,10 +68,11 @@
 							</form>
 
 							<c:forEach items="${playlists}" var="playlist" varStatus="status">
-								<form
+								
+									<div class="item text-center">
+									<form
 									action="/SpotifyWeb/audience/show1Playlist.htm" method="get"
 									role="button">
-									<div class="item">
 										<img
 											src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
 										<input name="namePlaylist" value="${playlist.name}" hidden>
@@ -76,8 +80,13 @@
 										<input name="idPlaylist" value="${playlist.id_playlist }"
 											hidden>
 										<button class="btn btn-dark" type="submit">Open</button>
-									</div>
+										</form>
+									<br>
+									<form action="/SpotifyWeb/audience/deletePlaylist.htm" method='post'>
+									<button name ="idPlaylist_delete" class="btn btn-dark" type="submit" value="${playlist.id_playlist}"
+										data-bs-toggle="modal" data-bs-target="#deletePlaylist">Delete</button>
 								</form>
+								</div>
 							</c:forEach>
 						</div>
 					</div>
@@ -90,10 +99,9 @@
 		<div class="main-content custom-scroll">
 			<div class="header-main">
 				<div class="logo">
-					<a href="#"> <img
+					 <img
 						src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png"
 						alt="Logo" />
-					</a>
 				</div>
 				<div class="dropdown user-info">
 					<button class="btn rounded-circle" type="button"
@@ -106,6 +114,8 @@
 							<div class="toggle-switch">
 								<span class="switch"></span>
 							</div></li>
+							<li><a href="/SpotifyWeb/audience/info.htm">Profile</a></li>
+								<li><a href="/SpotifyWeb/audience/changePassword.htm"> Change Password</a></li>
 						<li class=""><a href="#"> <i class='bx bx-log-out icon'></i>
 								<span class="">Logout</span>
 						</a></li>
@@ -144,23 +154,11 @@
 						</c:forEach>
 					</div>
 				</div>
-				<div class="spotify-playlists">
-					<h2>Old Songs</h2>
-					<form action="/SpotifyWeb/audience/oldSongs.htm" method="post">
-					<div class="list">
-						<div class="item text-center">
-							<img src="" />
-							<h4>Today's Top Hits</h4>
-							<button class="btn btn-dark" type="submit">Open</button>
-						</div>
-					</div>
-					</form>
-				</div>
 			</div>
 		</div>
 	</div>
 	</div>
-	<!-- Modal -->
+	<!-- Modal add playlist -->
 	<form action="/SpotifyWeb/audience/addPlaylist.htm" method='post'>
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -184,6 +182,7 @@
 			</div>
 		</div>
 	</form>
+	    
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

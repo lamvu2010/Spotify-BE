@@ -10,6 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="${pageContext.servletContext.contextPath }/">
+<link href="${pageContext.request.contextPath}/Pages/Common/style.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -28,8 +29,14 @@
 
 <title>Document</title>
 
+<script>
+	function addTrackToPlaylist(element) {
+		document.getElementById("id_track").value = element.value;
+	}
+</script>
 </head>
 <body class="dark">
+
 	<div class="container">
 		<nav class="sidebar">
 			<header>
@@ -56,37 +63,47 @@
 								data-bs-target="#exampleModal"></i> <i
 								class='fa fa-chevron-left icon toggle'></i>
 						</div></li>
-						</ul>
-					<div class="spotify-playlists custom-scroll">
-						<div class="list grid-lib">
-							<form action="/SpotifyWeb/audience/showLoveSongs.htm" method="post">
-								<div class="item text-center" id="lovesongs" >
+				</ul>
+				<div class="spotify-playlists custom-scroll">
+					<div class="list grid-lib">
+						<form action="/SpotifyWeb/audience/library.htm" method="get">
+							<div class="item text-center" id="lovesongs">
+								<img
+									src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
+								<h4>Love songs</h4>
+								<button class="btn btn-dark" type="submit">Open</button>
+							</div>
+						</form>
+						<c:forEach items="${playlists}" var="playlist" varStatus="status">
+							<div class="item text-center">
+								<form action="/SpotifyWeb/audience/show1Playlist.htm"
+									method="get">
+
 									<img
 										src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
-									<h4>Love songs</h4>
-									<button class="btn btn-dark" type="submit">Open</button>
-								</div>
-							</form>
-							<c:forEach items="${playlists}" var="playlist" varStatus="status">
-								<form
-									action="/SpotifyWeb/audience/show1Playlist.htm" method="get">
-									<div class="item text-center">
-										<img
-											src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
-										<div>
-											<input name="namePlaylist" value="${playlist.name}" hidden>
-											<h4>${playlist.name}</h4>
-											<input name="idPlaylist" value="${playlist.id_playlist}" hidden>
-											<button class="btn btn-dark" type="submit">Open</button>
-										</div>
+									<div>
+										<input name="namePlaylist" value="${playlist.name}" hidden>
+										<h4>${playlist.name}</h4>
+										<input name="idPlaylist" value="${playlist.id_playlist}"
+											hidden>
+										<button class="btn btn-dark" type="submit">Open</button>
 									</div>
+
 								</form>
-							</c:forEach>
-						</div>
+								<br>
+								<form action="/SpotifyWeb/audience/deletePlaylist.htm"
+									method='post'>
+									<button name="idPlaylist_delete" class="btn btn-dark"
+										type="submit" value="${playlist.id_playlist}"
+										data-bs-toggle="modal" data-bs-target="#deletePlaylist">Delete</button>
+								</form>
+							</div>
+						</c:forEach>
 					</div>
-				
+				</div>
+
 			</div>
-			</nav>
+		</nav>
 
 		<div class="main-wrapper">
 			<div class="main-content custom-scroll">
@@ -109,6 +126,8 @@
 								<div class="toggle-switch">
 									<span class="switch"></span>
 								</div></li>
+								<li><a href="/SpotifyWeb/audience/info.htm">Profile</a></li>
+								<li><a href="/SpotifyWeb/audience/changePassword.htm"> Change Password</a></li>
 							<li class=""><a href="/SpotifyWeb/home/login.htm"> <i
 									class='bx bx-log-out icon'></i> <span class="">Logout</span>
 							</a></li>
@@ -116,7 +135,9 @@
 					</div>
 				</div>
 				<div class="library">
-					<table class="table table-lib">
+					<input type="text" id="searchInput" placeholder="Tìm kiếm...">
+					<button id="searchButton">Tìm kiếm</button>
+					<table class="table table-lib" id="trackTable">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -126,12 +147,15 @@
 						<tbody>
 							<c:forEach items="${tracks}" var="track">
 								<tr>
-								<td><h5>${track.name}</h5></td>
-								<td>
-								<audio id="player" controls>
-									<source src="data:audio/mp3;base64,${track.path}">
-								</audio>
-								</td>
+									<td><h5>${track.name}</h5></td>
+									<td><audio id="player" controls>
+											<source src="data:audio/mp3;base64,${track.path}">
+										</audio></td>
+									<td>
+										<button class="fa fa-plus icon" role="button"
+											data-bs-toggle="modal" data-bs-target="#addTrack"
+											value="${track.id_track }" onclick="addTrackToPlaylist(this)"></button>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -166,12 +190,78 @@
 			</div>
 		</div>
 	</form>
-
+	<!-- Modal add track -->
+	<form action="/SpotifyWeb/audience/addTrack.htm" method='post'>
+		<div class="modal fade" id="addTrack" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add Track</h5>
+					</div>
+					<div class="modal-body">
+						<label for="namePlaylist">Name of playlist</label> <select
+							name="namePlaylist_add" id="namePlaylist_add">
+							<c:forEach items="${playlists }" var="playlist">
+								<option value="${playlist.id_playlist}">
+									${playlist.name }</option>
+							</c:forEach>
+							<option value="999999">LoveSongs</option>
+						</select> <input name="id_track" class="id_track" id="id_track" readonly>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 	<script src="./resources/audience/lib/test.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#trackTable').DataTable();
+		})
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(function() {
+			$('#searchButton')
+					.click(
+							function() {
+								var searchText = $('#searchInput').val()
+										.toLowerCase();
+								$('#trackTable tbody tr')
+										.each(
+												function() {
+													var found = false;
+													$(this)
+															.each(
+																	function() {
+																		if ($(
+																				this)
+																				.text()
+																				.toLowerCase()
+																				.indexOf(
+																						searchText) != -1) {
+																			found = true;
+																			return false;
+																		}
+																	});
+													if (found) {
+														$(this).show();
+													} else {
+														$(this).hide();
+													}
+												});
+							});
+		});
+	</script>
 </body>
 </html>
 

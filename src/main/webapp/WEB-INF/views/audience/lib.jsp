@@ -10,6 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="${pageContext.servletContext.contextPath }/">
+<link href="${pageContext.request.contextPath}/Pages/Common/style.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -24,12 +25,31 @@
 <link rel="stylesheet" href="./resources/audience/lib/player.css" />
 <link rel="stylesheet"
 	href="path/to/font-awesome/css/font-awesome.min.css">
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <title>Document</title>
 
+<script>
+	$(window).on('load', function() {
+
+		var id_playlist = localStorage.getItem("valueButton");
+		var id = $(document).find(".idPlaylist_deleteTrack");
+		id.val(id_playlist);
+	})
+
+	$(document).on('click', ".btn-open-playlist", function(e) {
+		localStorage.setItem("valueButton", $(this).val());
+	})
+</script>
 </head>
 <body class="dark">
+
 	<div class="container">
 		<nav class="sidebar">
 			<header>
@@ -38,8 +58,8 @@
 							<i class='fa fa-home icon' aria-hidden="true"></i> <span
 							class="text nav-text">Home</span>
 					</a></li>
-					<li class="nav-link"><a href="#"> <i
-							class='fa fa-search icon' aria-hidden="true"></i> <span
+					<li class="nav-link"><a href="/SpotifyWeb/audience/search.htm">
+							<i class='fa fa-search icon' aria-hidden="true"></i> <span
 							class="text nav-text">Search</span>
 					</a></li>
 				</ul>
@@ -56,37 +76,45 @@
 								data-bs-target="#exampleModal"></i> <i
 								class='fa fa-chevron-left icon toggle'></i>
 						</div></li>
-						</ul>
-					<div class="spotify-playlists custom-scroll">
-						<div class="list grid-lib">
-							<form action="/SpotifyWeb/audience/showLoveSongs.htm" method="post">
-								<div class="item text-center" id="lovesongs" >
+				</ul>
+				<div class="spotify-playlists custom-scroll">
+					<div class="list grid-lib">
+						<form action="/SpotifyWeb/audience/library.htm" method="get">
+							<div class="item text-center" id="lovesongs">
+								<img
+									src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
+								<h4>Love songs</h4>
+								<button class="btn btn-dark" type="submit">Open</button>
+							</div>
+						</form>
+						<c:forEach items="${playlists}" var="playlist" varStatus="status">
+
+							<div class="item text-center">
+								<form action="/SpotifyWeb/audience/show1Playlist.htm"
+									method="get">
 									<img
 										src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
-									<h4>Love songs</h4>
-									<button class="btn btn-dark" type="submit">Open</button>
-								</div>
-							</form>
-							<c:forEach items="${playlists}" var="playlist" varStatus="status">
-								<form
-									action="/SpotifyWeb/audience/show1Playlist.htm" method="get">
-									<div class="item text-center">
-										<img
-											src="https://cdn1.iconfinder.com/data/icons/multimedia-sound-1/32/Add_category-_playlist-256.png" />
-										<div>
-											<input name="namePlaylist" value="${playlist.name}" hidden>
-											<h4>${playlist.name}</h4>
-											<input name="idPlaylist" value="${playlist.id_playlist}" hidden>
-											<button class="btn btn-dark" type="submit">Open</button>
-										</div>
+									<div>
+										<input name="namePlaylist" value="${playlist.name}" hidden>
+										<h4>${playlist.name}</h4>
+										<input name="idPlaylist" value="${playlist.id_playlist}"
+											hidden>
+										<button class="btn btn-dark btn-open-playlist" type="submit"
+											value="${playlist.id_playlist}">Open</button>
 									</div>
 								</form>
-							</c:forEach>
-						</div>
+								<br>
+								<form action="/SpotifyWeb/audience/deletePlaylist.htm"
+									method='post'>
+									<button name="idPlaylist_delete" class="btn btn-dark"
+										type="submit" value="${playlist.id_playlist}">Delete</button>
+								</form>
+							</div>
+						</c:forEach>
 					</div>
-				
+				</div>
 			</div>
-			</nav>
+		</nav>
 
 		<div class="main-wrapper">
 			<div class="main-content custom-scroll">
@@ -109,9 +137,12 @@
 								<div class="toggle-switch">
 									<span class="switch"></span>
 								</div></li>
+								<li><a href="/SpotifyWeb/audience/info.htm">Profile</a></li>
+								<li><a href="/SpotifyWeb/audience/changePassword.htm"> Change Password</a></li>
 							<li class=""><a href="/SpotifyWeb/home/login.htm"> <i
 									class='bx bx-log-out icon'></i> <span class="">Logout</span>
 							</a></li>
+							
 						</ul>
 					</div>
 				</div>
@@ -145,12 +176,21 @@
 						<tbody>
 							<c:forEach items="${playlistShow}" var="track">
 								<tr>
-								<td><h5>${track.name}</h5></td>
-								<td>
-								<audio id="player" controls>
-									<source src="data:audio/mp3;base64,${track.path}">
-								</audio>
-								</td>
+									<td><h5>${track.name}</h5></td>
+									<td><audio id="player" controls>
+											<source src="data:audio/mp3;base64,${track.path}">
+										</audio></td>
+									<c:if test = "${type == 'private'}">
+										<td><form action="/SpotifyWeb/audience/deleteTrack.htm"
+												method="post">
+												<input name="idPlaylist" class="idPlaylist_deleteTrack"
+													hidden>
+
+												<button type="submit" name="idTrack"
+													class="btn-delete-track" value="${track.id_track }">Xóa</button>
+
+											</form></td>
+									</c:if>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -191,6 +231,7 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 	<script src="./resources/audience/lib/test.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
 
